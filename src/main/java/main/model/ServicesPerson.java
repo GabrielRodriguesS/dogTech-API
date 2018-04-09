@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -17,21 +16,20 @@ import javax.persistence.TemporalType;
 import lombok.Data;
 
 @Entity
-@Table(name = "servicos_person")
 @Data
-public class ServicosPerson implements Serializable {
+@Table(name = "services_person")
+public class ServicesPerson implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ServicosPersonPK servicosPersonPK;
-    @Column(name = "date")
+    protected ServicesPersonPK servicesPersonPK;
     @Temporal(TemporalType.DATE)
     private Date date;
-    @JoinColumn(name = "person_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Person person;
-    @JoinColumn(name = "services_id", referencedColumnName = "id", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Services services;
-    @OneToMany(mappedBy = "servicosPerson")
+    @OneToMany(mappedBy = "servicesPerson")
     private List<Photo> photoList;
+    @JoinColumn(name = "person_id1", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Person personId1;
+    @JoinColumn(name = "services_id1", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Services servicesId1;
 }

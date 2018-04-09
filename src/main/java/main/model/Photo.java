@@ -7,6 +7,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
@@ -17,13 +19,13 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "photo")
 @Data
+@Table(name = "photo")
 public class Photo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
     private Long id;
     @Column(name = "real_path")
     private String realPath;
@@ -33,30 +35,29 @@ public class Photo implements Serializable {
     private String photoLink;
     @JoinColumn(name = "adoption_id", referencedColumnName = "id")
     @ManyToOne
-    private Adoption adoption;
+    private Adoption adoptionId;
     @JoinColumn(name = "animal_id", referencedColumnName = "id")
     @ManyToOne
-    private Animal animal;
-    @JoinColumn(name = "photographer_id", referencedColumnName = "id")
-    @ManyToOne
-    private Photographer photographer;
+    private Animal animalId;
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     @ManyToOne
-    private Person person;
-    @JoinColumn(name = "post_adoption", referencedColumnName = "id")
+    private Person personId;
+    @JoinColumn(name = "photographer_id", referencedColumnName = "id")
     @ManyToOne
-    private PostAdoption postAdoption;
+    private Photographer photographerId;
+    @JoinColumn(name = "post_adoption_id", referencedColumnName = "id")
+    @ManyToOne
+    private PostAdoption postAdoptionId;
+    @JoinColumns({
+        @JoinColumn(name = "services_person_services_id", referencedColumnName = "services_id"),
+        @JoinColumn(name = "services_person_person_id", referencedColumnName = "person_id")})
+    @ManyToOne
+    private ServicesPerson servicesPerson;
     @JoinColumn(name = "story_id", referencedColumnName = "id")
     @ManyToOne
-    private Story story;
-    @JoinColumns({
-        @JoinColumn(name = "service_id", referencedColumnName = "services_id"),
-        @JoinColumn(name = "service_person_id", referencedColumnName = "person_id")})
-    @ManyToOne
-    private ServicosPerson servicosPerson;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    private Story storyId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photoId")
     private List<Services> servicesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photoId")
     private List<DonationsMade> donationsMadeList;
-
 }
