@@ -11,7 +11,8 @@ import lombok.Data;
 @Embeddable
 @Data
 public class ServicesPersonPK implements Serializable {
-    @Basic(optional = false)
+	private static final long serialVersionUID = 1L;
+	@Basic(optional = false)
     @Column(name = "services_id")
     private long servicesId;
     @Basic(optional = false)

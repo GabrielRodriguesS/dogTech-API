@@ -11,7 +11,8 @@ import lombok.Data;
 @Embeddable
 @Data
 public class ListVaccinesAnimalPK implements Serializable {
-    @Basic(optional = false)
+	private static final long serialVersionUID = 1L;
+	@Basic(optional = false)
     @Column(name = "animal_id")
     private long animalId;
     @Basic(optional = false)
