@@ -1,0 +1,5 @@
+CREATE TABLE configurations (
+  `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
+  `text` VARCHAR(4096) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
