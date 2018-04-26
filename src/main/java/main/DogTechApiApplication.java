@@ -9,4 +9,5 @@ public class DogTechApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DogTechApiApplication.class, args);
 	}
+
 }

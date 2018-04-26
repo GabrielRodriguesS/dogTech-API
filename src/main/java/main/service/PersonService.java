@@ -6,20 +6,20 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import main.model.Person;
 import main.repository.PersonRepository;
+import main.utils.EmailData;
 import main.utils.EmailUtils;
 
 @Service
 public class PersonService {
 
 	@Autowired
-	PersonRepository repository;
+	private PersonRepository repository;
 	@Autowired
-	public EmailUtils emailUtil;
+	private EmailUtils emailUtil;
 
 	public Person save(Person person) {
 		if (person.getPassword().isEmpty()) {
@@ -29,22 +29,22 @@ public class PersonService {
 		return this.repository.save(person);
 	}
 
-	@Autowired
-	public ResponseEntity<Person> updatePassword(String email) {
-		Optional<Person> person = this.repository.findByEmail(email);
+	// TODO adicionar a url para acesasr a pagina via token
+	public ResponseEntity<?> updatePassword(String email) {
+		Optional<Person> person = this.repository.findOneByEmailIgnoreCase(email);
 		if (person.isPresent()) {
 			person.get().setToken(this.getUUID());
 			person.get().setDateToken(new Date());
-			this.emailUtil.sendSimpleMessage(email, "Troca de senha", getEmailBody(person.get()));
+
+			EmailData emailData = EmailData.builder().to(email).subject("Troca de senha")
+					.text("Recebemos um pedido de troca de senha seu!").build();
+			this.emailUtil.sendSimpleMessage(emailData);
+
+			this.repository.save(person.get());
 			return ResponseEntity.accepted().build();
 		} else {
 			return ResponseEntity.noContent().build();
 		}
-	}
-
-	// TODO adicionar a url para acesasr a pagina via token
-	private String getEmailBody(Person person) {
-		return "Olá recebemos um pedido de alteração de senha no DogTech, acesse o link abaixo para alterar sua senha:\n%s\n";
 	}
 
 	private String getUUID() {

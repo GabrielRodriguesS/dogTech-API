@@ -16,46 +16,43 @@ import org.springframework.stereotype.Component;
 
 @Component
 @EnableAsync
-public class EmailUtils implements EmailService {
+public class EmailUtils {
 
 	@Autowired
-	public JavaMailSender emailSender;
+	private JavaMailSender emailSender;
 
-	public void sendSimpleMessage(String to, String subject, String text) {
+	public void sendSimpleMessage(EmailData emailData) {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(to);
-			message.setSubject(subject);
-			message.setText(text);
+			message.setTo(emailData.getTo());
+			message.setSubject(emailData.getSubject());
+			message.setText(emailData.getText());
 
-			emailSender.send(message);
+			this.emailSender.send(message);
 		} catch (MailException exception) {
 			exception.printStackTrace();
 		}
 	}
 
-	@Override
-	public void sendSimpleMessageUsingTemplate(String to, String subject, SimpleMailMessage template,
-			String... templateArgs) {
-		String text = String.format(template.getText(), templateArgs);
-		sendSimpleMessage(to, subject, text);
+	public void sendSimpleMessageUsingTemplate(EmailData emailData) {
+		emailData.setText(String.format(emailData.getText(), emailData.getTemplateArgs()));
+		sendSimpleMessage(emailData);
 	}
 
-	@Override
-	public void sendMessageWithAttachment(String to, String subject, String text, String pathToAttachment) {
+	public void sendMessageWithAttachment(EmailData emailData) {
 		try {
 			MimeMessage message = emailSender.createMimeMessage();
 			// pass 'true' to the constructor to create a multipart message
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(text);
+			helper.setTo(emailData.getTo());
+			helper.setSubject(emailData.getSubject());
+			helper.setText(emailData.getText());
 
-			FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
+			FileSystemResource file = new FileSystemResource(new File(emailData.getPathToAttachment()));
 			helper.addAttachment("Invoice", file);
 
-			emailSender.send(message);
+			this.emailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
