@@ -15,12 +15,12 @@ import javax.persistence.TemporalType;
 import lombok.Data;
 
 @Entity
-@Table(name = "lista_vacinas_animal")
 @Data
-public class ListaVacinasAnimal implements Serializable {
+@Table(name = "list_vaccines_animal")
+public class ListVaccinesAnimal implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ListaVacinasAnimalPK listaVacinasAnimalPK;
+    protected ListVaccinesAnimalPK listVaccinesAnimalPK;
     @Column(name = "application_date")
     @Temporal(TemporalType.DATE)
     private Date applicationDate;
@@ -30,5 +30,4 @@ public class ListaVacinasAnimal implements Serializable {
     @JoinColumn(name = "vaccine_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Vaccine vaccine;
-
 }

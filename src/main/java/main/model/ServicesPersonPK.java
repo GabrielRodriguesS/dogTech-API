@@ -10,14 +10,12 @@ import lombok.Data;
 
 @Embeddable
 @Data
-public class ListaVacinasAnimalPK implements Serializable {
- 
+public class ServicesPersonPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Basic(optional = false)
-    @Column(name = "animal_id")
-    private long animalId;
+    @Column(name = "services_id")
+    private long servicesId;
     @Basic(optional = false)
-    @Column(name = "vaccine_id")
-    private long vaccineId;
-
+    @Column(name = "person_id")
+    private long personId;
 }
