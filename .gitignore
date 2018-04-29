@@ -1,5 +1,3 @@
-/mail.properties
-
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -24,3 +22,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+src/main/resources/env/

@@ -1,13 +1,19 @@
 package main.service;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import freemarker.template.TemplateException;
 import main.model.Person;
 import main.repository.PersonRepository;
 import main.utils.EmailData;
@@ -30,14 +36,17 @@ public class PersonService {
 	}
 
 	// TODO adicionar a url para acesasr a pagina via token
-	public ResponseEntity<?> updatePassword(String email) {
+	public ResponseEntity<?> updatePassword(String email) throws MessagingException, IOException, TemplateException {
 		Optional<Person> person = this.repository.findOneByEmailIgnoreCase(email);
 		if (person.isPresent()) {
 			person.get().setToken(this.getUUID());
 			person.get().setDateToken(new Date());
 
-			EmailData emailData = EmailData.builder().to(email).subject("Troca de senha")
-					.text("Recebemos um pedido de troca de senha seu!").build();
+			EmailData emailData = EmailData.builder().to(email).subject("Alteração de senha no Dogtech").build();
+			Map<String, Object> model = new HashMap<String, Object>();
+			model.put("name", person.get().getName().split(" ")[0].toUpperCase());
+			model.put("link", "http://AINDA_NÃO_EXISTE_O_ENDPOINT_PARA_GERAR_O_LINK_AQUI.com");
+			emailData.setModel(model);
 			this.emailUtil.sendSimpleMessage(emailData);
 
 			this.repository.save(person.get());
@@ -46,7 +55,7 @@ public class PersonService {
 			return ResponseEntity.noContent().build();
 		}
 	}
-
+	
 	private String getUUID() {
 		return UUID.randomUUID().toString().replace("-", "");
 	}

@@ -1,6 +1,7 @@
 package main.utils;
 
-import org.springframework.mail.SimpleMailMessage;
+import java.util.List;
+import java.util.Map;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,11 +10,10 @@ import lombok.Data;
 @Data
 public class EmailData {
 
+	static final String from = "ongsjpa@gmail.com";
 	private String to;
 	private String subject;
-	private String text;
-	private SimpleMailMessage template;
-	private String templateArgs;
-	private String pathToAttachment;
+	private List<Object> attachments;
+	private Map<String, Object> model;
 
 }

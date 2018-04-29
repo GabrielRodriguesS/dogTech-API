@@ -1,61 +1,50 @@
 package main.utils;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
-@Component
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
+@Service
 @EnableAsync
 public class EmailUtils {
 
 	@Autowired
+	@Qualifier("javaMailSender")
 	private JavaMailSender emailSender;
+	@Autowired
+	@Qualifier("freemakerConfig")
+	private Configuration freemarkerConfig;
 
-	public void sendSimpleMessage(EmailData emailData) {
-		try {
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setTo(emailData.getTo());
-			message.setSubject(emailData.getSubject());
-			message.setText(emailData.getText());
+	@Async
+	public void sendSimpleMessage(EmailData mail) throws MessagingException, IOException, TemplateException {
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+				StandardCharsets.UTF_8.name());
 
-			this.emailSender.send(message);
-		} catch (MailException exception) {
-			exception.printStackTrace();
-		}
-	}
+		Template template = this.freemarkerConfig.getTemplate("email-template.ftl");
+		String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, mail.getModel());
 
-	public void sendSimpleMessageUsingTemplate(EmailData emailData) {
-		emailData.setText(String.format(emailData.getText(), emailData.getTemplateArgs()));
-		sendSimpleMessage(emailData);
-	}
+		helper.setTo(mail.getTo());
+		helper.setText(html, true);
+		helper.setSubject(mail.getSubject());
+		helper.setFrom(EmailData.from);
 
-	public void sendMessageWithAttachment(EmailData emailData) {
-		try {
-			MimeMessage message = emailSender.createMimeMessage();
-			// pass 'true' to the constructor to create a multipart message
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-			helper.setTo(emailData.getTo());
-			helper.setSubject(emailData.getSubject());
-			helper.setText(emailData.getText());
-
-			FileSystemResource file = new FileSystemResource(new File(emailData.getPathToAttachment()));
-			helper.addAttachment("Invoice", file);
-
-			this.emailSender.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
+		this.emailSender.send(message);
 	}
 
 }
