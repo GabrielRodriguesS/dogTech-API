@@ -1,13 +1,13 @@
 package main.repository;
 
-import java.util.Optional;
-
+import main.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import main.model.Person;
+import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person, Long> {
-	public Optional<Person> findOneByEmailIgnoreCase(String email);
+    Optional<Person> findOneByEmailIgnoreCase(String email);
 
-	public Person findByToken(String token);
+    Person findByToken(String token);
+
 }

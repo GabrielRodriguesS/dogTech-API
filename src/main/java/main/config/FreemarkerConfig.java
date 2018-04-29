@@ -1,7 +1,5 @@
 package main.config;
 
-import java.io.IOException;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
@@ -10,9 +8,9 @@ import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 public class FreemarkerConfig {
 
 	@Bean("freemakerConfig")
-	public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() throws IOException {
+	public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
 		FreeMarkerConfigurationFactoryBean bean = new FreeMarkerConfigurationFactoryBean();
-		bean.setTemplateLoaderPath("classpath:/static");
+        bean.setTemplateLoaderPath("classpath:/templates");
 		return bean;
 	}
 }
