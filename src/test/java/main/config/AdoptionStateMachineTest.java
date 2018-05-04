@@ -9,9 +9,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -20,18 +22,20 @@ import static org.junit.Assert.assertEquals;
 public class AdoptionStateMachineTest {
 
     @Autowired
+    private StateMachineFactory<States, Events> factoryStateMachine;
     private StateMachine<States, Events> stateMachine;
     private Adoption adoption;
 
     @Before
     public void setUp() throws Exception {
         this.adoption = new Adoption();
+        this.stateMachine = this.factoryStateMachine.getStateMachine();
         this.stateMachine.start();
     }
 
     @After
     public void tearDown() {
-        stateMachine.stop();
+        this.stateMachine.stop();
     }
 
     // Flow normal testing walking by allowed transitions states
@@ -83,5 +87,14 @@ public class AdoptionStateMachineTest {
     }
     //Ending normal flow tests
 
+    @Test
+    public void testNoAllowedTransitionState(){ //This test are very wrong, but i'm lazy
+        assertFalse(this.stateMachine.sendEvent(Events.REVOKED_ADOPTION));
+        assertFalse(this.stateMachine.sendEvent(Events.GIVE_BACK));
+        assertFalse(this.stateMachine.sendEvent(Events.ADOPT));
+        assertFalse(this.stateMachine.sendEvent(Events.REVOKED_ADOPTION));
+
+        assertEquals(States.WAITING, this.stateMachine.getState().getId());
+    }
 
 }

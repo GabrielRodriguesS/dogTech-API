@@ -3,13 +3,11 @@ package main.config;
 import main.config.enums.Events;
 import main.config.enums.States;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.statemachine.annotation.OnStateMachineStart;
-import org.springframework.statemachine.annotation.OnTransition;
-import org.springframework.statemachine.annotation.WithStateMachine;
-import org.springframework.statemachine.config.EnableStateMachine;
+import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
+import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
 
@@ -44,7 +42,7 @@ import java.util.EnumSet;
 */
 
 @Configuration
-@EnableStateMachine
+@EnableStateMachineFactory
 public class AdoptionStateMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events> {
     @Override
     public void configure(StateMachineStateConfigurer<States, Events> states) throws Exception {
