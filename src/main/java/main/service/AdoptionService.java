@@ -11,6 +11,9 @@ public class AdoptionService {
     @Autowired
     AdoptionRepository repository;
 
+    public Adoption save(Adoption adoption) {
+        return this.repository.save(adoption);
+    }
     // TODO implementar adoption service
     public Adoption changeStateAdoption(String state, Long id) {
         return null;

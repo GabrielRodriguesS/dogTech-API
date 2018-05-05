@@ -1,26 +1,11 @@
 package main.model;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import lombok.Data;
 
 @Entity
 @Data
@@ -66,7 +51,7 @@ public class Animal implements Serializable {
     private List<Photo> photoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
     private List<ListVaccinesAnimal> listVaccinesAnimalList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animalId1")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animalId")
     private List<Adoption> adoptionList;
     @JoinColumn(name = "baia_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

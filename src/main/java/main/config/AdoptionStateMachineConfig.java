@@ -1,13 +1,12 @@
 package main.config;
 
-import main.config.enums.Events;
-import main.config.enums.States;
+import main.config.stateMachineEnums.Events;
+import main.config.stateMachineEnums.States;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.statemachine.config.EnableStateMachineFactory;
-import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
+import org.springframework.statemachine.config.EnableStateMachine;
+import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
-import org.springframework.stereotype.Component;
 
 import java.util.EnumSet;
 
@@ -15,35 +14,36 @@ import java.util.EnumSet;
 +----------------------------------------------------------+
 |                   Adoption machine state                 |
 +----------------------------------------------------------+
-|                   Event                  Event           |
-|               Start Machine       DISAPPROVED_ADOPTION   |
+|                   Event                   Event          |
+|               Start Machine          REJECTED_EVENT      |
 |                  +-------+            +--------+         |
 |                  |WAITING+------------>REJECTED|         |
 |                  +----+--+            +--------+         |
 |                       |                                  |
-|                       |                 Event            |
-|                       |                GIVE_UP           |
-|        Event     +----v--------+       +---------+       |
-| APPROVED_ADOPTION|WAITING_VISIT+------->DESISTING|       |
+|            Event      |                  Event           |
+|    WAITING_VISIT_EVENT|             DESISTING_EVENT      |
+|                  +----v--------+       +---------+       |
+|                  |WAITING_VISIT+------->DESISTING|       |
 |                  +-----+-------+       +---------+       |
 |                        |                                 |
 |                        |                                 |
-|               Event +--v----+       +--------+   Event   |
-|               ADOPT |ADOPTED+------->RETURNED| GIVE_BACK |
+|           Event     +--v----+       +--------+           |
+|       ADOPTED_EVENT |ADOPTED+------->RETURNED|           |
 |                     +---+---+       +--------+           |
-|                         |                                |
-|                         |                                |
+|                         |              Event             |
+|                         |         RETURNED_EVENT         |
 |                     +---v---+                            |
 |                     |REVOKED|                            |
 |                     +-------+                            |
 |                      Event                               |
-|                 REVOKED_ADOPTION                         |
+|                  REVOKED_EVENT                           |
 +----------------------------------------------------------+
 */
 
 @Configuration
-@EnableStateMachineFactory
-public class AdoptionStateMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events> {
+@EnableStateMachine
+public class AdoptionStateMachineConfig extends StateMachineConfigurerAdapter<States, Events> {
+
     @Override
     public void configure(StateMachineStateConfigurer<States, Events> states) throws Exception {
         states
@@ -61,27 +61,28 @@ public class AdoptionStateMachineConfig extends EnumStateMachineConfigurerAdapte
         transitions
                 .withExternal()
                 .source(States.WAITING).target(States.REJECTED)
-                .event(Events.DISAPPROVED_ADOPTION)
+                .event(Events.REJECTED_EVENT)
                 .and()
                 .withExternal()
                 .source(States.WAITING).target(States.WAITING_VISIT)
-                .event(Events.APPROVED_ADOPTION)
+                .event(Events.WAITING_VISIT_EVENT)
                 .and()
                 .withExternal()
                 .source(States.WAITING_VISIT).target(States.DESISTING)
-                .event(Events.GIVE_UP)
+                .event(Events.DESISTING_EVENT)
                 .and()
                 .withExternal()
                 .source(States.WAITING_VISIT).target(States.ADOPTED)
-                .event(Events.ADOPT)
+                .event(Events.ADOPTED_EVENT)
                 .and()
                 .withExternal()
                 .source(States.ADOPTED).target(States.RETURNED)
-                .event(Events.GIVE_BACK)
+                .event(Events.RETURNED_EVENT)
                 .and()
                 .withExternal()
                 .source(States.ADOPTED).target(States.REVOKED)
-                .event(Events.REVOKED_ADOPTION);
+                .event(Events.REVOKED_EVENT);
     }
+
 
 }

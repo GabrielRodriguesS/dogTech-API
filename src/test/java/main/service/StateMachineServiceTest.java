@@ -1,19 +1,22 @@
 package main.service;
 
-import main.config.enums.States;
+import main.DogTechApiApplication;
+import main.config.stateMachineEnums.States;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = StateMachineService.class)
+@SpringBootTest(classes = DogTechApiApplication.class)
 public class StateMachineServiceTest {
 
     @Autowired
@@ -27,13 +30,49 @@ public class StateMachineServiceTest {
 
     @After
     public void tearDown() {
-        this.stateMachine = null;
+        this.stateMachine.stop();
     }
 
-    //Todo refatorar as classes handler para converter ou algo assim
     @Test
-    public void testStateMachineReturnWaitingState() { // TODO autowired das classes handlerEnum nao funcionam.
-        this.stateMachine = this.stateMachineService.getConfiguredStateMachine(States.WAITING);
+    public void testStateMachineReturnWaitingState() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.WAITING);
         assertEquals(States.WAITING, this.stateMachine.getState().getId());
     }
+
+    @Test
+    public void testStateMachineReturnWaitingVisitState() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.WAITING_VISIT);
+        assertEquals(States.WAITING_VISIT, this.stateMachine.getState().getId());
+    }
+
+    @Test
+    public void testStateMachineReturnRejectState() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.REJECTED);
+        assertEquals(States.REJECTED, this.stateMachine.getState().getId());
+    }
+
+    @Test
+    public void testStateMachineReturnDesistingState() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.DESISTING);
+        assertEquals(States.DESISTING, this.stateMachine.getState().getId());
+    }
+
+    @Test
+    public void testStateMachineReturnAdoptedState() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.ADOPTED);
+        assertEquals(States.ADOPTED, this.stateMachine.getState().getId());
+    }
+
+    @Test
+    public void testStateMachineReturnReturnedState() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.RETURNED);
+        assertEquals(States.RETURNED, this.stateMachine.getState().getId());
+    }
+
+    @Test
+    public void testStateMachineReturnRevokedState() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.REVOKED);
+        assertEquals(States.REVOKED, this.stateMachine.getState().getId());
+    }
+
 }

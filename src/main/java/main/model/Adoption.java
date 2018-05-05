@@ -1,6 +1,7 @@
 package main.model;
 
 import lombok.Data;
+import main.config.stateMachineEnums.States;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +23,7 @@ public class Adoption implements Serializable {
     @Column(name = "date_adoption")
     @Temporal(TemporalType.DATE)
     private Date dateAdoption;
-    private String status;
+    private States status;
     @Basic(optional = false)
     @Column(name = "animal_id")
     private long animalId;
@@ -34,9 +35,6 @@ public class Adoption implements Serializable {
     @JoinColumn(name = "adoption_manager", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Person adoptionManager;
-    @JoinColumn(name = "animal_id1", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Animal animalId1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<EvaluationAdopter> evaluationAdopterList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")

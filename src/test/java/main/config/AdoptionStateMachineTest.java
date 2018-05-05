@@ -1,7 +1,7 @@
 package main.config;
 
-import main.config.enums.Events;
-import main.config.enums.States;
+import main.config.stateMachineEnums.Events;
+import main.config.stateMachineEnums.States;
 import main.model.Adoption;
 import org.junit.After;
 import org.junit.Before;
@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
-import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -22,14 +21,12 @@ import static org.junit.Assert.assertEquals;
 public class AdoptionStateMachineTest {
 
     @Autowired
-    private StateMachineFactory<States, Events> factoryStateMachine;
     private StateMachine<States, Events> stateMachine;
     private Adoption adoption;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.adoption = new Adoption();
-        this.stateMachine = this.factoryStateMachine.getStateMachine();
         this.stateMachine.start();
     }
 
@@ -45,54 +42,54 @@ public class AdoptionStateMachineTest {
     }
 
     @Test
-    public void testEventDisaprovedAdoption() {
-        assertTrue(this.stateMachine.sendEvent(Events.DISAPPROVED_ADOPTION));
+    public void testEventDisapprovedAdoption() {
+        assertTrue(this.stateMachine.sendEvent(Events.REJECTED_EVENT));
         assertEquals(States.REJECTED, this.stateMachine.getState().getId());
     }
 
     @Test
     public void testEventApprovedAdoption() {
-        assertTrue(this.stateMachine.sendEvent(Events.APPROVED_ADOPTION));
+        assertTrue(this.stateMachine.sendEvent(Events.WAITING_VISIT_EVENT));
         assertEquals(States.WAITING_VISIT, this.stateMachine.getState().getId());
     }
 
     @Test
     public void testEventEventGiveUp() {
-        assertTrue(this.stateMachine.sendEvent(Events.APPROVED_ADOPTION));
-        assertTrue(this.stateMachine.sendEvent(Events.GIVE_UP));
+        assertTrue(this.stateMachine.sendEvent(Events.WAITING_VISIT_EVENT));
+        assertTrue(this.stateMachine.sendEvent(Events.DESISTING_EVENT));
         assertEquals(States.DESISTING, this.stateMachine.getState().getId());
     }
 
     @Test
     public void testEventAdopt() {
-        assertTrue(this.stateMachine.sendEvent(Events.APPROVED_ADOPTION));
-        assertTrue(this.stateMachine.sendEvent(Events.ADOPT));
+        assertTrue(this.stateMachine.sendEvent(Events.WAITING_VISIT_EVENT));
+        assertTrue(this.stateMachine.sendEvent(Events.ADOPTED_EVENT));
         assertEquals(States.ADOPTED, this.stateMachine.getState().getId());
     }
 
     @Test
     public void testEventGiveBack() {
-        assertTrue(this.stateMachine.sendEvent(Events.APPROVED_ADOPTION));
-        assertTrue(this.stateMachine.sendEvent(Events.ADOPT));
-        assertTrue(this.stateMachine.sendEvent(Events.GIVE_BACK));
+        assertTrue(this.stateMachine.sendEvent(Events.WAITING_VISIT_EVENT));
+        assertTrue(this.stateMachine.sendEvent(Events.ADOPTED_EVENT));
+        assertTrue(this.stateMachine.sendEvent(Events.RETURNED_EVENT));
         assertEquals(States.RETURNED, this.stateMachine.getState().getId());
     }
 
     @Test
     public void testEventRevokedAdoption() {
-        assertTrue(this.stateMachine.sendEvent(Events.APPROVED_ADOPTION));
-        assertTrue(this.stateMachine.sendEvent(Events.ADOPT));
-        assertTrue(this.stateMachine.sendEvent(Events.REVOKED_ADOPTION));
+        assertTrue(this.stateMachine.sendEvent(Events.WAITING_VISIT_EVENT));
+        assertTrue(this.stateMachine.sendEvent(Events.ADOPTED_EVENT));
+        assertTrue(this.stateMachine.sendEvent(Events.REVOKED_EVENT));
         assertEquals(States.REVOKED, this.stateMachine.getState().getId());
     }
     //Ending normal flow tests
 
     @Test
     public void testNoAllowedTransitionState(){ //This test are very wrong, but i'm lazy
-        assertFalse(this.stateMachine.sendEvent(Events.REVOKED_ADOPTION));
-        assertFalse(this.stateMachine.sendEvent(Events.GIVE_BACK));
-        assertFalse(this.stateMachine.sendEvent(Events.ADOPT));
-        assertFalse(this.stateMachine.sendEvent(Events.REVOKED_ADOPTION));
+        assertFalse(this.stateMachine.sendEvent(Events.REVOKED_EVENT));
+        assertFalse(this.stateMachine.sendEvent(Events.RETURNED_EVENT));
+        assertFalse(this.stateMachine.sendEvent(Events.ADOPTED_EVENT));
+        assertFalse(this.stateMachine.sendEvent(Events.REVOKED_EVENT));
 
         assertEquals(States.WAITING, this.stateMachine.getState().getId());
     }

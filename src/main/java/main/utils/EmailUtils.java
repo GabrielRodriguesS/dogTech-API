@@ -1,13 +1,16 @@
 package main.utils;
 
-import freemarker.core.ParseException;
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
@@ -15,6 +18,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.Executor;
 
 @Service
 @EnableAsync
@@ -27,7 +31,6 @@ public class EmailUtils {
     @Qualifier("freemakerConfig")
     private Configuration freemarkerConfig;
 
-    // TODO adicionar um bean TaskExecutor
     @Async
     public void sendSimpleMessage(EmailData mail) {
         MimeMessage message = emailSender.createMimeMessage();
@@ -50,4 +53,14 @@ public class EmailUtils {
         }
     }
 
+    @Bean
+    public Executor asyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(2);
+        executor.setQueueCapacity(500);
+        executor.setThreadNamePrefix("EmailUtils-");
+        executor.initialize();
+        return executor;
+    }
 }
