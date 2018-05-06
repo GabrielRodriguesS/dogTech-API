@@ -1,0 +1,1 @@
+INSERT INTO `baia` (`id`, `name`, `number`) VALUES (NULL, 'baia 1', '1'), (NULL, 'baia 2', '2')

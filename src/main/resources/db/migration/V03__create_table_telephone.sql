@@ -1,7 +1,7 @@
 CREATE TABLE telephone (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `number` VARCHAR(15) NULL,
-  `whatsapp` TINYINT NULL COMMENT 'É um numero do whatsapp ou nao?',
+  `whatsapp` BIT NULL COMMENT 'É um numero do whatsapp ou nao?',
   `identifier` VARCHAR(64) NULL COMMENT 'Identificador do telefone, exemplo \"telefone de casa\", \"telefone do comercio\"',
   `person_id` BIGINT(18) NOT NULL,
   PRIMARY KEY (`id`),

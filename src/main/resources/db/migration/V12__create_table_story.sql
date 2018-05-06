@@ -1,7 +1,7 @@
 CREATE TABLE story (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `text` VARCHAR(2048) NULL,
-  `approved` TINYINT NULL,
+  `approved` BIT NULL,
   `adoption_id` BIGINT(18) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_relato_adocao1_idx` (`adoption_id` ASC),

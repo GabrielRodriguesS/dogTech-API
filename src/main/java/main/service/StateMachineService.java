@@ -16,4 +16,8 @@ public class StateMachineService {
     public StateMachine configureStateMachine(States state) {
         return state.getStateMachineConfigure(this.stateMachine);
     }
+
+    public void stopStateMachine() {
+        this.stateMachine.stop();
+    }
 }

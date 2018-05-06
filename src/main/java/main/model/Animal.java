@@ -31,8 +31,8 @@ public class Animal implements Serializable {
     @Basic(optional = false)
     private String dewormed;
     @Basic(optional = false)
-    @Column(name = "patromonio_tombado")
-    private String patromonioTombado;
+    @Column(name = "patrimonio_tombado")
+    private String patrimonioTombado;
     @Basic(optional = false)
     private String care;
     private String temperament;
