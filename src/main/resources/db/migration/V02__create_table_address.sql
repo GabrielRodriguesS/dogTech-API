@@ -5,7 +5,7 @@ CREATE TABLE address (
   `state` VARCHAR(33) NULL,
   `zip_code` VARCHAR(9) NULL,
   `number` VARCHAR(16) NULL,
-  `complement` ENUM('home', 'apartment', 'commercial', 'other') NULL,
+  `complement` ENUM('HOME', 'APARTMENT', 'COMMERCIAL', 'OTHER') NULL,
   `person_id` BIGINT(18) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_endereco_pessoa_idx` (`person_id` ASC),

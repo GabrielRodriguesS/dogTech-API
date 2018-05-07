@@ -16,26 +16,26 @@ public class NumberUtilsTest {
 
     @Test
     public void testReturnOddNumber() {
-        assertEquals(new Double(2), NumberUtils.getHalfNumber(5));
+        assertEquals(2, NumberUtils.getHalfNumber(5));
     }
 
     @Test
     public void testReturnPairNumber() {
-        assertEquals(new Double(3), NumberUtils.getHalfNumber(6));
+        assertEquals(3, NumberUtils.getHalfNumber(6));
     }
 
     @Test
     public void testSendNegativeNumberPair() {
-        assertEquals(new Double(-3), NumberUtils.getHalfNumber(-6));
+        assertEquals(-3, NumberUtils.getHalfNumber(-6));
     }
 
     @Test
     public void testSendNegativeNumberOdd() {
-        assertEquals(new Double(-2), NumberUtils.getHalfNumber(-5));
+        assertEquals(-2, NumberUtils.getHalfNumber(-5));
     }
 
     @Test
     public void testSendZero() {
-        assertEquals(new Double(0), NumberUtils.getHalfNumber(0));
+        assertEquals(0, NumberUtils.getHalfNumber(0));
     }
 }

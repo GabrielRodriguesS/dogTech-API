@@ -1,5 +1,5 @@
 CREATE TABLE role (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
-  `name` ENUM('general director', 'adoption manager', 'adopter') NULL,
+  `name` ENUM('GENERAL_DIRECTOR', 'ADOPTION_MANAGER', 'ADOPTER', 'PUBLIC') NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

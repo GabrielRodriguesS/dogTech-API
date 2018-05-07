@@ -1,6 +1,7 @@
 package main.service;
 
 import main.model.Animal;
+import main.model.enums.Species;
 import main.repository.AnimalRepository;
 import main.utils.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,29 @@ public class AnimalService {
 
     @Autowired
     private AnimalRepository repository;
+    private Integer dogsPerPage, felinesPerPage;
 
     public Animal save(Animal animal) {
         return this.repository.save(animal);
     }
 
     public Page<Animal> findAllAnimalsOnPublicVision(Pageable page) {
-        Double animalsByPage = NumberUtils.getHalfNumber(page.getPageSize());
-        Integer felineByPage = page.getPageSize() - animalsByPage.intValue();
-        List<Animal> listCanine = this.repository.findBySpeciesAndAvailableIsTrue("canine", this.getPage(animalsByPage.intValue(), page.getPageNumber()));
-        List<Animal> listFeline = this.repository.findBySpeciesAndAvailableIsTrue("feline", this.getPage(felineByPage, page.getPageNumber()));
+        this.getAnimalsPerPage(page.getPageSize());
 
+        List<Animal> listCanine = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrue(Species.CANINE, this.getPage(page.getPageNumber(), this.dogsPerPage));
+        List<Animal> listFeline = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrue(Species.FELINE, this.getPage(page.getPageNumber(), this.felinesPerPage));
         listCanine.addAll(listFeline);
-        return new PageImpl<>(listCanine, page, listCanine.size());
+        return new PageImpl<>(listCanine);
     }
 
-    private Pageable getPage(int pageSize, int pageNumber) {
-        Pageable returnList = PageRequest.of(pageSize, pageNumber);
-        return returnList;
+    private Pageable getPage(int pages, int elementsPerPage) {
+        Pageable page = PageRequest.of(pages, elementsPerPage);
+        return page;
     }
+
+    private void getAnimalsPerPage(int pageSize) {
+        this.dogsPerPage = NumberUtils.getHalfNumber(pageSize);
+        this.felinesPerPage = pageSize - this.dogsPerPage;
+    }
+
 }

@@ -2,11 +2,9 @@ package main.utils;
 
 public class NumberUtils {
 
-    public static Double getHalfNumber(int number) {
-        return Math.ceil(number / 2);
+    public static int getHalfNumber(int number) {
+        Double halfNumber = Math.ceil(number / 2);
+        return halfNumber.intValue();
     }
 
-    public static Double getHalfNumber(Double number) {
-        return Math.ceil(number / 2);
-    }
 }

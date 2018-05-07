@@ -1,6 +1,10 @@
 package main.model;
 
 import lombok.Data;
+import main.model.enums.Sex;
+import main.model.enums.Size;
+import main.model.enums.Species;
+import main.model.enums.Temperament;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,29 +18,32 @@ public class Animal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     private Long id;
     @Basic(optional = false)
     private String name;
     @Basic(optional = false)
     private String history;
     @Basic(optional = false)
-    private String available;
+    private boolean available;
     @Basic(optional = false)
-    private String species;
+    @Enumerated(EnumType.STRING)
+    private Species species;
     @Basic(optional = false)
-    private String sex;
+    @Enumerated(EnumType.STRING)
+    private Sex sex;
     @Basic(optional = false)
-    private String castred;
+    private boolean castred;
     @Basic(optional = false)
-    private String dewormed;
+    private boolean dewormed;
     @Basic(optional = false)
     @Column(name = "patrimonio_tombado")
-    private String patrimonioTombado;
+    private boolean patrimonioTombado;
     @Basic(optional = false)
-    private String care;
-    private String temperament;
-    private String size;
+    private boolean care;
+    @Enumerated(EnumType.STRING)
+    private Temperament temperament;
+    @Enumerated(EnumType.STRING)
+    private Size size;
     @Column(name = "other_information")
     private String otherInformation;
     @Column(name = "approximate_age")

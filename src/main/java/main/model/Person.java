@@ -17,7 +17,6 @@ public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
 	private Long id;
 	@Basic(optional = false)
 	private String name;
@@ -35,13 +34,13 @@ public class Person implements Serializable {
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date dateOfBirth;
 	@Basic(optional = false)
-	private short voluntary;
+    private boolean voluntary;
 	private String token;
 	@Column(name = "date_token")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateToken;
 	@Column(name = "default_password")
-	private Short defaultPassword;
+    private boolean defaultPassword;
 	@ManyToMany(mappedBy = "personList")
 	private List<Role> roleList;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "personId")

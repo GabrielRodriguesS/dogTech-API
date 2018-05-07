@@ -30,7 +30,12 @@ public class AnimalServiceTest {
     }
 
     @Test
-    public void testIfReturnList() {
+    public void testPagePair() {
         assertEquals(10, this.animalService.findAllAnimalsOnPublicVision(PageRequest.of(1, 10)).getTotalElements());
+    }
+
+    @Test
+    public void testPageOdd() {
+        assertEquals(15, this.animalService.findAllAnimalsOnPublicVision(PageRequest.of(1, 15)).getTotalElements());
     }
 }
