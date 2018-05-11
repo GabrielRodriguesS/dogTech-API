@@ -21,16 +21,23 @@ public class AnimalService {
     private Integer dogsPerPage, felinesPerPage;
 
     public Animal save(Animal animal) {
+        if (animal.isCare() && animal.isAvailable() || animal.isPatrimonioTombado() && animal.isAvailable()) {
+            animal.setAvailable(false);
+        }
         return this.repository.save(animal);
     }
 
-    public Page<Animal> findAllAnimalsOnPublicVision(Pageable page) {
+    public Page<Animal> findAllAnimalsOnPublicView(Pageable page) {
         this.getAnimalsPerPage(page.getPageSize());
 
-        List<Animal> listCanine = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrue(Species.CANINE, this.getPage(page.getPageNumber(), this.dogsPerPage));
-        List<Animal> listFeline = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrue(Species.FELINE, this.getPage(page.getPageNumber(), this.felinesPerPage));
+        List<Animal> listCanine = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrueAndPatrimonioTombadoIsFalseAndCareIsFalse(Species.CANINE, this.getPage(page.getPageNumber(), this.dogsPerPage));
+        List<Animal> listFeline = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrueAndPatrimonioTombadoIsFalseAndCareIsFalse(Species.FELINE, this.getPage(page.getPageNumber(), this.felinesPerPage));
         listCanine.addAll(listFeline);
         return new PageImpl<>(listCanine);
+    }
+
+    public Page<Animal> findAllAnimalsOnAdministrationView(Pageable page) {
+        return this.repository.findAll(page);
     }
 
     private Pageable getPage(int pages, int elementsPerPage) {

@@ -15,7 +15,7 @@ import java.util.EnumSet;
 |                   Adoption machine state                 |
 +----------------------------------------------------------+
 |                   Event                   Event          |
-|               Start Machine          REJECTED_EVENT      |
+|      Start Machine or WAITING_EVENT  REJECTED_EVENT      |
 |                  +-------+            +--------+         |
 |                  |WAITING+------------>REJECTED|         |
 |                  +----+--+            +--------+         |
@@ -59,6 +59,10 @@ public class AdoptionStateMachineConfig extends StateMachineConfigurerAdapter<St
     @Override
     public void configure(StateMachineTransitionConfigurer<States, Events> transitions) throws Exception {
         transitions
+                .withExternal()
+                .source(States.WAITING).target(States.WAITING)
+                .event(Events.WAITING_EVENT)
+                .and()
                 .withExternal()
                 .source(States.WAITING).target(States.REJECTED)
                 .event(Events.REJECTED_EVENT)

@@ -22,17 +22,18 @@ public class Adoption implements Serializable {
     @Column(name = "date_adoption")
     @Temporal(TemporalType.DATE)
     private Date dateAdoption;
+    @Enumerated(EnumType.STRING)
     private States status;
-    @Basic(optional = false)
-    @Column(name = "animal_id")
-    private long animalId;
-    @OneToMany(mappedBy = "adoptionId")
+    @OneToMany(mappedBy = "adoptionId", fetch = FetchType.LAZY)
     private List<Photo> photoList;
+    @JoinColumn(name = "animal_id", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Animal animalId;
     @JoinColumn(name = "adopter", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Person adopter;
     @JoinColumn(name = "adoption_manager", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Person adoptionManager;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<EvaluationAdopter> evaluationAdopterList;

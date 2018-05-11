@@ -31,11 +31,11 @@ public class AnimalServiceTest {
 
     @Test
     public void testPagePair() {
-        assertEquals(10, this.animalService.findAllAnimalsOnPublicVision(PageRequest.of(1, 10)).getTotalElements());
+        assertEquals(10, this.animalService.findAllAnimalsOnPublicView(PageRequest.of(1, 10)).getTotalElements());
     }
 
     @Test
     public void testPageOdd() {
-        assertEquals(15, this.animalService.findAllAnimalsOnPublicVision(PageRequest.of(1, 15)).getTotalElements());
+        assertEquals(15, this.animalService.findAllAnimalsOnPublicView(PageRequest.of(1, 15)).getTotalElements());
     }
 }

@@ -1,6 +1,7 @@
 package main.service;
 
 import main.DogTechApiApplication;
+import main.config.stateMachineEnums.Events;
 import main.config.stateMachineEnums.States;
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = StateMachineService.class)
@@ -73,6 +75,18 @@ public class StateMachineServiceTest {
     public void testStateMachineReturnRevokedState() {
         this.stateMachine = this.stateMachineService.configureStateMachine(States.REVOKED);
         assertEquals(States.REVOKED, this.stateMachine.getState().getId());
+    }
+
+    @Test
+    public void stateMachineHasErros() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.WAITING);
+    }
+
+    @Test
+    public void startStateMachine() {
+        this.stateMachine = this.stateMachineService.configureStateMachine(States.WAITING);
+        this.stateMachine.sendEvent(Events.REVOKED_EVENT);
+        assertTrue(this.stateMachine.hasStateMachineError());
     }
 
 }
