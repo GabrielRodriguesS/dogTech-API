@@ -36,7 +36,7 @@ public class EmailUtils {
     @Qualifier("freemakerConfig")
     private Configuration freemarkerConfig;
 
-    @Async
+    @Async("asyncExecutor")
     public void sendSimpleMessage(EmailData mail, TemplatesEnum templateName) {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper;
@@ -57,7 +57,7 @@ public class EmailUtils {
         }
     }
 
-    @Async
+    @Async("asyncExecutor")
     public void sendSimplesMessageToRejectedAdoptions(List<Person> personList, String animalName) {
         personList.stream().forEach(a -> {
             EmailData emailData = EmailData.builder().to(a.getEmail()).subject("Resposta ao pedido de adoção").build();
@@ -75,7 +75,8 @@ public class EmailUtils {
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(2);
         executor.setQueueCapacity(500);
-        executor.setThreadNamePrefix("EmailUtils-");
+        executor.setBeanName("emailExecutor");
+        executor.setThreadNamePrefix("EmailExecutor-");
         executor.initialize();
         return executor;
     }

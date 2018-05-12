@@ -43,15 +43,13 @@ public class PersonService {
         }
     }
 
-    // TODO descobrir se é melhor retornar null ou outra coisa caso o token tenha vencido
-    public Person findByToken(String token) {
+    public ResponseEntity<Person> findByToken(String token) {
         Person person = this.repository.findByToken(token);
         Duration duration = Duration.between(person.getDateToken().toInstant(), new Date().toInstant());
         if (duration.toHours() < 24) {
-            return person;
-        } else {
-            return null;
+            return ResponseEntity.ok(person);
         }
+        return ResponseEntity.badRequest().build();
     }
 
     private String getUUID() {

@@ -3,7 +3,6 @@ package main.service;
 import main.config.stateMachineEnums.States;
 import main.dto.AdoptionDTO;
 import main.model.Adoption;
-import main.model.Person;
 import main.repository.AdoptionRepository;
 import main.utils.EmailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -40,37 +38,21 @@ public class AdoptionService {
         return this.repository.save(adoption);
     }
 
-    // TODO refatorar e criar mais testes
+    // TODO Criar testes e verificar se tds as actions estão corretas
     public ResponseEntity<Adoption> changeStateAdoption(String state, Long id) {
         Optional<Adoption> current = this.repository.findById(id);
         if (current.isPresent()) {
             StateMachine stateMachine = this.stateMachineService.configureStateMachine(current.get().getStatus());
             if (stateMachine.sendEvent(States.valueOf(state).getEvent())) {
                 current.get().setStatus(States.valueOf(state));
-                Adoption adoptionToSave = IsAdoptedState(States.valueOf(state), current.get());
-                this.repository.save(adoptionToSave);
-            } else {
-                ResponseEntity.badRequest().build();
+                this.repository.save(current.get());
+                this.stateMachineService.stopStateMachine();
+                Adoption updatedAdoption = States.valueOf(state).startAction(current.get(), this.animalService, this.repository, this.emailUtil);
+                this.repository.save(updatedAdoption);
+                return ResponseEntity.ok(updatedAdoption);
             }
-        } else {
-            ResponseEntity.badRequest().build();
         }
-        this.stateMachineService.stopStateMachine();
-        return ResponseEntity.ok(current.get());
-    }
-
-    private Adoption IsAdoptedState(States state, Adoption adoption) {
-        if (state == States.ADOPTED) {
-            adoption.getAnimalId().setAvailable(false);
-            this.animalService.save(adoption.getAnimalId());
-            adoption.setDateAdoption(new Date());
-            List<Adoption> allAdoptionsRejected = this.repository.findByAnimalIdAndStatusEquals(
-                    adoption.getAnimalId(), States.WAITING);
-            List<Person> allAdopters = allAdoptionsRejected.stream()
-                    .map(Adoption::getAdopter).collect(Collectors.toList());
-            this.emailUtil.sendSimplesMessageToRejectedAdoptions(allAdopters, adoption.getAnimalId().getName());
-        }
-        return adoption;
+        return ResponseEntity.badRequest().build();
     }
 
     public Map<Long, List<AdoptionDTO>> findAll() {

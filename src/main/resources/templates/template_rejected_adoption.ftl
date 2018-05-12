@@ -1,24 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
     <title>Pedido de adoção</title>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             font-size: 48px;
             text-align: center;
+            color: black; 
         }
 
         table {
             font-size: 17px;
             border-collapse: collapse;
             background-color: #f8f8f8;
-            color: black;
+            color: black; 
         }
 
         a, span {
@@ -26,11 +24,11 @@
         }
     </style>
 </head>
-<body style="margin: 0; padding: 0;color:black;">
+<body style="margin: 0; padding: 0;color:black">
 
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="color: black;">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="color: black">
     <tr>
-        <td style="text-align: center;">
+        <td>
             <h3>DogTech</h3>
             <h4>Seu pedido de adoção foi recusado</h4>
         </td>
@@ -53,6 +51,5 @@
         </td>
     </tr>
 </table>
-
 </body>
 </html>
