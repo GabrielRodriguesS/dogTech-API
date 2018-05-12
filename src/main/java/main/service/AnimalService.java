@@ -29,7 +29,6 @@ public class AnimalService {
 
     public Page<Animal> findAllAnimalsOnPublicView(Pageable page) {
         this.getAnimalsPerPage(page.getPageSize());
-
         List<Animal> listCanine = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrueAndPatrimonioTombadoIsFalseAndCareIsFalse(Species.CANINE, this.getPage(page.getPageNumber(), this.dogsPerPage));
         List<Animal> listFeline = this.repository.findAnimalsBySpeciesIsAndAvailableIsTrueAndPatrimonioTombadoIsFalseAndCareIsFalse(Species.FELINE, this.getPage(page.getPageNumber(), this.felinesPerPage));
         listCanine.addAll(listFeline);

@@ -5,6 +5,7 @@ import main.model.Person;
 import main.repository.PersonRepository;
 import main.utils.EmailData;
 import main.utils.EmailUtils;
+import main.utils.TemplatesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,7 @@ public class PersonService {
         if (person.isPresent()) {
             person.get().setToken(this.getUUID());
             person.get().setDateToken(new Date());
-
-            EmailData emailData = EmailData.builder().to(email).subject("Alteração de senha no Dogtech").build();
-            Map<String, Object> model = new HashMap<>();
-            model.put("name", StringUtil.capitalize(person.get().getName().split(" ")[0]));
-            model.put("link", "http://AINDA_NÃO_EXISTE_O_ENDPOINT_PARA_GERAR_O_LINK_AQUI.com");
-            emailData.setModel(model);
-            this.emailUtil.sendSimpleMessage(emailData);
-
+            this.sendEmail(person.get().getName(), email, "http://AINDA_NÃO_EXISTE_O_ENDPOINT_PARA_GERAR_O_LINK_AQUI.com");
             this.repository.save(person.get());
             return ResponseEntity.accepted().build();
         } else {
@@ -64,5 +58,12 @@ public class PersonService {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
-
+    private void sendEmail(String name, String email, String link) {
+        EmailData emailData = EmailData.builder().to(email).subject("Alteração de senha no Dogtech").build();
+        Map<String, Object> model = new HashMap<>();
+        model.put("name", StringUtil.capitalize(name.split(" ")[0]));
+        model.put("link", link);
+        emailData.setModel(model);
+        this.emailUtil.sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_UPDATE_PASSWORD);
+    }
 }

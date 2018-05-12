@@ -1,8 +1,8 @@
 package main.service;
 
 import main.DogTechApiApplication;
-import main.config.stateMachineEnums.States;
 import main.model.Adoption;
+import main.model.Person;
 import main.repository.AdoptionRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = AdoptionRepository.class)
@@ -33,8 +36,14 @@ public class AdoptionServiceTest {
 
     @Test
     public void testGroupAdoption() {
-        this.adoptionService.changeStateAdoption(States.REVOKED.toString(), new Long(1));
-        this.adoptionService.changeStateAdoption(States.ADOPTED.toString(), new Long(2));
+        List<Person> ps = new ArrayList();
+        Person p1 = new Person();
+        p1.setEmail("rodriguesgabrielsouza@gmail.com");
+        Person p2 = new Person();
+        p2.setEmail("rodriguez.gabriel001@gmail.com");
+        ps.add(p1);
+        ps.add(p2);
 
+        ps.stream().forEach(p -> System.out.println("Email: " + p.getEmail()));
     }
 }

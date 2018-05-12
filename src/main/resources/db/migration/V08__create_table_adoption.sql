@@ -1,6 +1,6 @@
 CREATE TABLE adoption (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
-  `date_interest` DATE NULL,
+  `date_interest` DATE NOT NULL,
   `date_adoption` DATE NULL,
   `status` ENUM('WAITING', 'REJECTED', 'WAITING_VISIT', 'DESISTING', 'ADOPTED', 'RETURNED', 'REVOKED') NULL,
   `adopter` BIGINT(18) NOT NULL,

@@ -4,6 +4,7 @@ import lombok.Data;
 import main.config.stateMachineEnums.States;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Adoption implements Serializable {
     private Long id;
     @Column(name = "date_interest")
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date dateInterest;
     @Column(name = "date_adoption")
     @Temporal(TemporalType.DATE)

@@ -3,6 +3,8 @@ package main.utils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.utility.StringUtil;
+import main.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 @Service
@@ -32,14 +37,13 @@ public class EmailUtils {
     private Configuration freemarkerConfig;
 
     @Async
-    public void sendSimpleMessage(EmailData mail) {
+    public void sendSimpleMessage(EmailData mail, TemplatesEnum templateName) {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper;
         try {
             helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                     StandardCharsets.UTF_8.name());
-
-            Template template = this.freemarkerConfig.getTemplate("email-template.ftl");
+            Template template = this.freemarkerConfig.getTemplate(templateName.getFileName());
             String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, mail.getModel());
 
             helper.setTo(mail.getTo());
@@ -51,6 +55,18 @@ public class EmailUtils {
         } catch (MessagingException | IOException | TemplateException e) {
             e.printStackTrace();
         }
+    }
+
+    @Async
+    public void sendSimplesMessageToRejectedAdoptions(List<Person> personList, String animalName) {
+        personList.stream().forEach(a -> {
+            EmailData emailData = EmailData.builder().to(a.getEmail()).subject("Resposta ao pedido de adoção").build();
+            Map<String, Object> model = new HashMap<>();
+            model.put("name", StringUtil.capitalize(a.getName().split(" ")[0]));
+            model.put("animal", animalName);
+            emailData.setModel(model);
+            sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_REJECTED_ADOPTION);
+        });
     }
 
     @Bean
