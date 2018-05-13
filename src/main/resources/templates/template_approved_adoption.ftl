@@ -30,19 +30,24 @@
     <tr>
         <td>
             <h3>DogTech</h3>
-            <h4>Seu pedido de adoção foi recusado</h4>
+            <h4>Seu pedido de adoção foi aprovado</h4>
         </td>
     </tr>
     <tr>
         <td>
             <p>Olá ${name},</p>
-            <p>Infelizmente não foi dessa vez, ¯\_(ツ)_/¯
+            <p>Parabéns seu pedido de adoção foi aprovado! ヽ(^◇^*)/
                 <br/>
-                Saiba que a galera da SJPA sem dúvidas teve dificuldades para escolher entre
-                todos os pedidos de adoção para o(a) ${animal}, mas não desista!
+                Escolhemos você para realizar uma adoção responsável!
+                <br/>
+                Agende um horário de visita para você conhecer pessoalmente o(a) ${animal}.
+                <br/>
             </p>
-            <p>Você encontrará um animal perfeito para você, temos certeza disso ʕ•ᴥ•ʔ</p>
-            <p>Caso tenha qualquer dúvida entre em contato conosco pelo e-mail <span>ongsjpa@gmail.com</span>.</p>
+            <p>
+                Não se esqueça dos termos de adoção responsável que podem ser lidos <a href="#">aqui</a>
+                <br/>
+                Caso tenha qualquer dúvida entre em contato conosco pelo e-mail <span>ongsjpa@gmail.com</span>.
+            </p>
         </td>
     </tr>
     <tr>

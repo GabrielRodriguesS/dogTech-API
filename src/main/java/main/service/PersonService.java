@@ -19,7 +19,7 @@ public class PersonService {
     @Autowired
     private PersonRepository repository;
     @Autowired
-    private EmailUtils emailUtil;
+    private EmailUtils emailUtils;
 
     public Person save(Person person) {
         if (person.getPassword().isEmpty()) {
@@ -62,6 +62,6 @@ public class PersonService {
         model.put("name", StringUtil.capitalize(name.split(" ")[0]));
         model.put("link", link);
         emailData.setModel(model);
-        this.emailUtil.sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_UPDATE_PASSWORD);
+        this.emailUtils.sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_UPDATE_PASSWORD);
     }
 }
