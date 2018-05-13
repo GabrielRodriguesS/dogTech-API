@@ -1,8 +1,8 @@
 package main.config;
 
-import main.config.stateMachineEnums.Events;
-import main.config.stateMachineEnums.States;
-import main.model.Adoption;
+import main.domain.model.Adoption;
+import main.utils.stateMachine.stateMachineEnums.Events;
+import main.utils.stateMachine.stateMachineEnums.States;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

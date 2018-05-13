@@ -1,10 +1,10 @@
 package main.service;
 
-import main.config.stateMachineEnums.States;
-import main.dto.AdoptionDTO;
-import main.model.Adoption;
-import main.repository.AdoptionRepository;
+import main.domain.dto.AdoptionDTO;
+import main.domain.model.Adoption;
+import main.domain.repository.AdoptionRepository;
 import main.utils.EmailUtils;
+import main.utils.stateMachine.stateMachineEnums.States;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.statemachine.StateMachine;

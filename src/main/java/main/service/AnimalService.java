@@ -1,8 +1,8 @@
 package main.service;
 
-import main.model.Animal;
-import main.model.enums.Species;
-import main.repository.AnimalRepository;
+import main.domain.model.Animal;
+import main.domain.model.enums.Species;
+import main.domain.repository.AnimalRepository;
 import main.utils.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -1,9 +1,9 @@
 package main.service;
 
 import freemarker.template.utility.StringUtil;
-import main.model.Person;
-import main.repository.PersonRepository;
-import main.utils.EmailData;
+import main.domain.model.EmailData;
+import main.domain.model.Person;
+import main.domain.repository.PersonRepository;
 import main.utils.EmailUtils;
 import main.utils.TemplatesEnum;
 import org.springframework.beans.factory.annotation.Autowired;

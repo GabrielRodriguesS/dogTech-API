@@ -1,5 +1,0 @@
-package main.config.stateMachineEnums;
-
-public enum Events {
-    WAITING_EVENT, REJECTED_EVENT, WAITING_VISIT_EVENT, DESISTING_EVENT, ADOPTED_EVENT, RETURNED_EVENT, REVOKED_EVENT
-}

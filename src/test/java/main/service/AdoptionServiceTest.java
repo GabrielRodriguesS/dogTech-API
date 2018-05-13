@@ -1,9 +1,9 @@
 package main.service;
 
 import main.DogTechApiApplication;
-import main.model.Adoption;
-import main.model.Person;
-import main.repository.AdoptionRepository;
+import main.domain.model.Adoption;
+import main.domain.model.Person;
+import main.domain.repository.AdoptionRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

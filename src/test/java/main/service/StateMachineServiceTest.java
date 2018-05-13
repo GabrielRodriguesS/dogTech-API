@@ -1,8 +1,8 @@
 package main.service;
 
 import main.DogTechApiApplication;
-import main.config.stateMachineEnums.Events;
-import main.config.stateMachineEnums.States;
+import main.utils.stateMachine.stateMachineEnums.Events;
+import main.utils.stateMachine.stateMachineEnums.States;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

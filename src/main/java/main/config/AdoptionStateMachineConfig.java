@@ -1,7 +1,7 @@
 package main.config;
 
-import main.config.stateMachineEnums.Events;
-import main.config.stateMachineEnums.States;
+import main.utils.stateMachine.stateMachineEnums.Events;
+import main.utils.stateMachine.stateMachineEnums.States;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
