@@ -2,7 +2,6 @@ package main.service;
 
 import main.domain.dto.AdoptionDTO;
 import main.domain.model.Adoption;
-import main.domain.repository.AdoptionDTORepository;
 import main.domain.repository.AdoptionRepository;
 import main.domain.stateMachine.stateMachineEnums.States;
 import main.utils.EmailUtils;
@@ -11,10 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
@@ -22,16 +23,14 @@ import static java.util.stream.Collectors.groupingBy;
 public class AdoptionService {
 
     private AdoptionRepository repository;
-    private AdoptionDTORepository dtoRepository;
     private StateMachineService stateMachineService;
     private AnimalService animalService;
     private EmailUtils emailUtil;
 
     @Autowired
-    public AdoptionService(EmailUtils emailUtil, AnimalService animalService, AdoptionDTORepository dtoRepository,
+    public AdoptionService(EmailUtils emailUtil, AnimalService animalService,
                            StateMachineService stateMachineService, AdoptionRepository repository) {
         this.repository = repository;
-        this.dtoRepository = dtoRepository;
         this.animalService = animalService;
         this.stateMachineService = stateMachineService;
         this.emailUtil = emailUtil;
@@ -73,6 +72,11 @@ public class AdoptionService {
 //    }
 
     public List<AdoptionDTO> findAdoptionsWithStateAdopted() {
-        return this.dtoRepository.findAdoptionDTOByStatusIsAndPostAdoptionListIsNull(States.ADOPTED);
+        ZonedDateTime now = ZonedDateTime.now();
+        ZonedDateTime fifteenDaysAgo = now.plusDays(-15);
+        return this.repository.findAdoptionsByStatusIsAndPostAdoptionListIsNull(States.ADOPTED).stream()
+                .filter(a -> a.getDateAdoption().toInstant().isBefore(fifteenDaysAgo.toInstant()))
+                .map(a -> new AdoptionDTO(a))
+                .collect(Collectors.toList());
     }
 }

@@ -4,6 +4,7 @@ import main.DogTechApiApplication;
 import main.domain.model.Adoption;
 import main.domain.repository.AdoptionRepository;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {AdoptionRepository.class, AdoptionService.class, Adoption.class})
@@ -20,8 +23,6 @@ public class AdoptionServiceTest {
     @Mock
     private Adoption adoption;
     @Autowired
-    private AdoptionRepository adoptionRepository;
-    @Autowired
     private AdoptionService adoptionService;
 
     @Before
@@ -29,4 +30,9 @@ public class AdoptionServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
+    //TODO criar um mock da base para fazer testes mais seguros!
+    @Test
+    public void testLitToAdoptionDTO() {
+        assertEquals(1, this.adoptionService.findAdoptionsWithStateAdopted().size());
+    }
 }

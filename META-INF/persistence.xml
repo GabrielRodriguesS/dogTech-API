@@ -29,6 +29,7 @@
         <class>main.domain.model.ServicesPerson</class>
         <class>main.domain.model.SuggestionHour</class>
         <class>main.domain.model.ListVaccinesAnimal</class>
+        <class>main.domain.dto.AdoptionDTO</class>
         <properties>
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:mysql://localhost:3306/dogTech?zeroDateTimeBehavior=convertToNull"/>

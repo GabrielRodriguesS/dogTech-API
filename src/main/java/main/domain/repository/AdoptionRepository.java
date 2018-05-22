@@ -25,4 +25,9 @@ public interface AdoptionRepository extends JpaRepository<Adoption, Long> {
             "join a.manager manager")
     List<AdoptionDTO> findAllAdoptionDTO();
 
+    //    @Query("select new main.domain.dto.AdoptionDTO(a) from Adoption a " +
+//            "join a.adopter adopter " +
+//            "join a.animal animal " +
+//            "join a.manager manager")
+    List<Adoption> findAdoptionsByStatusIsAndPostAdoptionListIsNull(States states);
 }

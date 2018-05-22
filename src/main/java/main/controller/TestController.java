@@ -1,8 +1,8 @@
 package main.controller;
 
+import main.domain.stateMachine.stateMachineEnums.States;
 import main.service.AdoptionService;
 import main.service.PersonService;
-import main.utils.stateMachine.stateMachineEnums.States;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

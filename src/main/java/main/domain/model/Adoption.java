@@ -2,6 +2,7 @@ package main.domain.model;
 
 import lombok.Data;
 import main.domain.stateMachine.stateMachineEnums.States;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,11 +18,13 @@ public class Adoption implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "date_interest", columnDefinition = "DATE")
-    @Temporal(TemporalType.DATE)
     @NotNull
+    @Column(name = "date_interest", columnDefinition = "DATE")
+    @Type(type = "java.util.Date")
+    @Temporal(TemporalType.DATE)
     private Date dateInterest;
     @Column(name = "date_adoption", columnDefinition = "DATE")
+    @Type(type = "java.util.Date")
     @Temporal(TemporalType.DATE)
     private Date dateAdoption;
     @Enumerated(EnumType.STRING)

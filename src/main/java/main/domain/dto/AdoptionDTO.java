@@ -4,13 +4,11 @@ import lombok.Data;
 import main.domain.model.Adoption;
 import main.domain.stateMachine.stateMachineEnums.States;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Data
-@Embeddable
 public class AdoptionDTO {
     private Long animalId;
     private String animalName;
