@@ -1,4 +1,4 @@
-package main.utils.stateMachine;
+package main.domain.stateMachine;
 
 import main.domain.model.Adoption;
 import main.domain.repository.AdoptionRepository;

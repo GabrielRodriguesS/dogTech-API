@@ -1,7 +1,7 @@
 package main.service;
 
-import main.utils.stateMachine.stateMachineEnums.Events;
-import main.utils.stateMachine.stateMachineEnums.States;
+import main.domain.stateMachine.stateMachineEnums.Events;
+import main.domain.stateMachine.stateMachineEnums.States;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Service;

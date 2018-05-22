@@ -1,30 +1,39 @@
 package main.domain.dto;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import main.utils.stateMachine.stateMachineEnums.States;
+import main.domain.model.Adoption;
+import main.domain.stateMachine.stateMachineEnums.States;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 
 @Data
-@RequiredArgsConstructor
+@Embeddable
 public class AdoptionDTO {
     private Long animalId;
     private String animalName;
+    @Temporal(TemporalType.DATE)
     private Date dateAdoption;
+    @Temporal(TemporalType.DATE)
     private Date dateInterest;
     private States status;
     private String adopterName;
+    private String adopterEmail;
     private String managerName;
 
-    public AdoptionDTO(Long animalId, String animalName, Date dateAdoption, Date dateInterest,
-                       States status, String adopterName, String managerName) {
-        this.animalId = animalId;
-        this.animalName = animalName;
-        this.dateAdoption = dateAdoption;
-        this.dateInterest = dateInterest;
-        this.status = status;
-        this.adopterName = adopterName;
-        this.managerName = managerName;
+    public AdoptionDTO(Adoption adoption) {
+        this.animalId = adoption.getAnimal().getId();
+        this.animalName = adoption.getAnimal().getName();
+        this.dateAdoption = adoption.getDateAdoption();
+        this.dateInterest = adoption.getDateInterest();
+        this.status = adoption.getStatus();
+        this.adopterName = adoption.getAdopter().getName();
+        this.managerName = adoption.getManager().getName();
+        this.adopterEmail = adoption.getAdopter().getEmail();
+    }
+
+    public AdoptionDTO() {
     }
 }

@@ -1,4 +1,4 @@
-CREATE TABLE telephone (
+CREATE TABLE IF NOT EXISTS telephone (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `number` VARCHAR(15) NULL,
   `whatsapp` BIT NULL COMMENT 'É um numero do whatsapp ou nao?',

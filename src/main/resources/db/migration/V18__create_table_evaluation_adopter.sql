@@ -1,4 +1,4 @@
-CREATE TABLE evaluation_adopter (
+CREATE TABLE IF NOT EXISTS evaluation_adopter (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `stars` FLOAT NULL,
   `adoption_id` BIGINT(18) NOT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE configurations (
+CREATE TABLE IF NOT EXISTS configurations (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `text` VARCHAR(4096) NULL,
   PRIMARY KEY (`id`))

@@ -1,8 +1,8 @@
-package main.utils.stateMachine.stateMachineConfigured;
+package main.domain.stateMachine.stateMachineConfigured;
 
-import main.utils.stateMachine.StatesConfig;
-import main.utils.stateMachine.stateMachineEnums.Events;
-import main.utils.stateMachine.stateMachineEnums.States;
+import main.domain.stateMachine.StatesConfig;
+import main.domain.stateMachine.stateMachineEnums.Events;
+import main.domain.stateMachine.stateMachineEnums.States;
 import org.springframework.statemachine.StateMachine;
 
 public class ConfiguredToWaiting implements StatesConfig {

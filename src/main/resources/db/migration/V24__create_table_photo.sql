@@ -1,4 +1,4 @@
-CREATE TABLE photo (
+CREATE TABLE IF NOT EXISTS photo (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `real_path` VARCHAR(128) NULL,
   `path_thumbnail` VARCHAR(128) NULL,

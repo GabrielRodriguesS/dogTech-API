@@ -3,7 +3,7 @@ package main.domain.repository;
 import main.domain.dto.AdoptionDTO;
 import main.domain.model.Adoption;
 import main.domain.model.Animal;
-import main.utils.stateMachine.stateMachineEnums.States;
+import main.domain.stateMachine.stateMachineEnums.States;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,17 +13,16 @@ import java.util.List;
 
 public interface AdoptionRepository extends JpaRepository<Adoption, Long> {
 
-    @Modifying(clearAutomatically = true)
-    @Query("update Adoption adoption set adoption.status = :state where adoption.id = :id")
-    Adoption updateState(@Param("id") Long id, @Param("state") String state);
-
     List<Adoption> findByAnimalIdAndStatusEquals(Animal animal, States states);
 
-    @Query("select new main.dto.AdoptionDTO(" +
-            "animal.id, animal.name, a.dateAdoption, a.dateInterest, a.status, adopter.name, manager.name) " +
-            "from Adoption a " +
+    @Modifying(clearAutomatically = true)
+    @Query("update Adoption adoption set adoption.status = :state where adoption.id = :id")
+    Adoption updateState(@Param("id") Long id, @Param("state") States state);
+
+    @Query("select new main.domain.dto.AdoptionDTO(a) from Adoption a " +
             "join a.adopter adopter " +
-            "join a.animalId animal " +
-            "join a.adoptionManager manager")
+            "join a.animal animal " +
+            "join a.manager manager")
     List<AdoptionDTO> findAllAdoptionDTO();
+
 }

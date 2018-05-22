@@ -1,16 +1,16 @@
-package main.utils.stateMachine.stateActions;
+package main.domain.stateMachine.stateActions;
 
 import main.domain.model.Adoption;
 import main.domain.repository.AdoptionRepository;
+import main.domain.stateMachine.StatesActions;
 import main.service.AnimalService;
 import main.utils.EmailUtils;
-import main.utils.stateMachine.StatesActions;
 
 public class DesistingAction implements StatesActions {
     @Override
     public Adoption action(Adoption adoption, AnimalService animalService, AdoptionRepository repository, EmailUtils emailUtil) {
-        adoption.getAnimalId().setAvailable(true);
-        animalService.save(adoption.getAnimalId());
+        adoption.getAnimal().setAvailable(true);
+        animalService.save(adoption.getAnimal());
         return adoption;
     }
 }

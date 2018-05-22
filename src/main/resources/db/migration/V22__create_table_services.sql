@@ -1,4 +1,4 @@
-CREATE TABLE services (
+CREATE TABLE IF NOT EXISTS services (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(64) NOT NULL,
   `value` INT NULL COMMENT 'Esta tabela centraliza todas as opções de edição existentes na tela inicial do sistema que são criação de serviços, campanhas e doações de quantidas monetárias para a ong',

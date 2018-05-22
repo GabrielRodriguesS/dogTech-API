@@ -1,13 +1,13 @@
-package main.utils.stateMachine.stateMachineEnums;
+package main.domain.stateMachine.stateMachineEnums;
 
 import main.domain.model.Adoption;
 import main.domain.repository.AdoptionRepository;
+import main.domain.stateMachine.StatesActions;
+import main.domain.stateMachine.StatesConfig;
+import main.domain.stateMachine.stateActions.*;
+import main.domain.stateMachine.stateMachineConfigured.*;
 import main.service.AnimalService;
 import main.utils.EmailUtils;
-import main.utils.stateMachine.StatesActions;
-import main.utils.stateMachine.StatesConfig;
-import main.utils.stateMachine.stateActions.*;
-import main.utils.stateMachine.stateMachineConfigured.*;
 import org.springframework.statemachine.StateMachine;
 
 public enum States {

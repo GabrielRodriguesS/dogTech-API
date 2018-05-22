@@ -1,4 +1,4 @@
-CREATE TABLE suggestion_hour (
+CREATE TABLE IF NOT EXISTS suggestion_hour (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `date` DATETIME NOT NULL,
   `visit_id` BIGINT(18) NOT NULL,

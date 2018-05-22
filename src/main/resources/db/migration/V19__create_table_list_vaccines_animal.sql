@@ -1,4 +1,4 @@
-CREATE TABLE list_vaccines_animal (
+CREATE TABLE IF NOT EXISTS list_vaccines_animal (
   `animal_id` BIGINT(18) NOT NULL,
   `vaccine_id` BIGINT(18) NOT NULL,
   `application_date` DATE NULL,

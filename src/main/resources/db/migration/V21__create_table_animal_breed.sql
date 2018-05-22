@@ -1,4 +1,4 @@
-CREATE TABLE animal_breed (
+CREATE TABLE IF NOT EXISTS animal_breed (
   `animal_id` BIGINT(18) NOT NULL,
   `breed_id` BIGINT(18) NOT NULL,
   PRIMARY KEY (`animal_id`, `breed_id`),

@@ -1,9 +1,9 @@
-CREATE TABLE post_adoption (
+CREATE TABLE IF NOT EXISTS post_adoption (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `feedback` VARCHAR(512) NULL,
   `post_adoption_id` BIGINT(18) NULL,
   `adoption_id` BIGINT(18) NOT NULL,
-  `author` INT NOT NULL,
+  `author` BIGINT(18) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_pos_adocao_pos_adocao1_idx` (`post_adoption_id` ASC),
   INDEX `fk_pos_adocao_adocao1_idx` (`adoption_id` ASC),

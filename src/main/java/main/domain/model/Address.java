@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Data
 @Table(name = "address")
 public class Address implements Serializable {
+    //TODO refatorar para se tornar um Embeddable com person
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

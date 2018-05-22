@@ -58,7 +58,7 @@ public class Animal implements Serializable {
     private List<Photo> photoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
     private List<ListVaccinesAnimal> listVaccinesAnimalList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animalId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "animal")
     private List<Adoption> adoptionList;
     @JoinColumn(name = "baia_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

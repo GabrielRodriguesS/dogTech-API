@@ -4,8 +4,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.utility.StringUtil;
+import main.domain.dto.AdoptionDTO;
 import main.domain.model.EmailData;
 import main.domain.model.Person;
+import main.domain.model.enums.TemplatesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -59,14 +61,28 @@ public class EmailUtils {
     }
 
     @Async("asyncExecutor")
-    public void sendSimplesMessageToRejectedAdoptions(List<Person> personList, String animalName) {
-        personList.stream().forEach(a -> {
-            EmailData emailData = EmailData.builder().to(a.getEmail()).subject("Resposta ao pedido de adoção").build();
+    public void sendSimpleMessageToRejectedAdoptions(List<Person> personList, String animalName) {
+        personList.stream().forEach(adoption -> {
+            EmailData emailData = EmailData.builder().to(adoption.getEmail()).subject("Resposta ao pedido de adoção").build();
             Map<String, Object> model = new HashMap<>();
-            model.put("name", StringUtil.capitalize(a.getName().split(" ")[0]));
+            model.put("name", StringUtil.capitalize(adoption.getName().split(" ")[0]));
             model.put("animal", animalName);
             emailData.setModel(model);
             sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_REJECTED_ADOPTION);
+        });
+    }
+
+    @Async("asyncExecutor")
+    public void sendSimpleMessageToRequestFeedback(List<AdoptionDTO> data) {
+        data.forEach(a -> {
+            EmailData emailData = EmailData.builder().to(a.getAdopterEmail())
+                    .subject("Precisamos do seu feedback").build();
+            Map<String, Object> model = new HashMap<>();
+            model.put("name", StringUtil.capitalize(a.getAdopterName().split(" ")[0]));
+            model.put("animal", a.getAnimalName());
+            model.put("link", "http://AINDA_NÃO_EXISTE_O_ENDPOINT_PARA_GERAR_O_LINK_AQUI.com");
+            emailData.setModel(model);
+            sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_REQUEST_FEEDBACK);
         });
     }
 

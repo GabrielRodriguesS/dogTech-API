@@ -1,4 +1,4 @@
-CREATE TABLE photographer (
+CREATE TABLE IF NOT EXISTS photographer (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(128) NULL,
   `contact` VARCHAR(128) NULL,

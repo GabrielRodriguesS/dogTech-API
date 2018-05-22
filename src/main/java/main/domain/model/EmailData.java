@@ -10,7 +10,7 @@ import java.util.Map;
 @Data
 public class EmailData {
 
-	static final String from = "ongsjpa@gmail.com";
+    public static final String from = "ongsjpa@gmail.com";
 	private String to;
 	private String subject;
 	private List<Object> attachments;

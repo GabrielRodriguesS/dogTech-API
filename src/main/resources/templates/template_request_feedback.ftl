@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>Pedido de adoção</title>
+    <title>Precisamos do seu feedback</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
@@ -19,7 +19,18 @@
             color: black;
         }
 
-        a, span {
+        .btn {
+            display: inline-block;
+            font-family: Arial;
+            color: #ffffff;
+            font-size: 20px;
+            background: #82acc7;
+            padding: 10px 20px 10px 20px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #8cb5cf;
             text-decoration: none;
         }
     </style>
@@ -30,18 +41,19 @@
     <tr>
         <td>
             <h3>DogTech</h3>
-            <h4>Seu pedido de adoção foi recusado</h4>
+            <h4>Queremos saber como está sendo sua adoção</h4>
         </td>
     </tr>
     <tr>
         <td>
             <p>Olá ${name},</p>
-            <p>Infelizmente não foi dessa vez. ¯\_(ツ)_/¯
+            <p>Adoraríamos saber como o(a) ${animal} está se adaptando na sua casa.
                 <br/>
-                Saiba que a galera da SJPA sem dúvidas teve dificuldades para escolher entre
-                todos os pedidos de adoção para o(a) ${animal}, mas não desista!
+                Ele(a) tem se comportado bem, ou você tem notado algum comportamento diferente?
+                <br/>
+                <a href="${link}" class="btn">Responda por aqui</a>
             </p>
-            <p>Você encontrará um animal perfeito para você, temos certeza disso ʕ•ᴥ•ʔ</p>
+            <p>Esperamos que esteja tudo bem com o(a) ${animal} e que você esteja adorando essa experiência. (∪ ◡ ∪)</p>
             <p>Caso tenha qualquer dúvida entre em contato conosco pelo e-mail <span>ongsjpa@gmail.com</span>.</p>
         </td>
     </tr>

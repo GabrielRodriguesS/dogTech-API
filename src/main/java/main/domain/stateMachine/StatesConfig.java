@@ -1,7 +1,7 @@
-package main.utils.stateMachine;
+package main.domain.stateMachine;
 
-import main.utils.stateMachine.stateMachineEnums.Events;
-import main.utils.stateMachine.stateMachineEnums.States;
+import main.domain.stateMachine.stateMachineEnums.Events;
+import main.domain.stateMachine.stateMachineEnums.States;
 import org.springframework.statemachine.StateMachine;
 
 public interface StatesConfig {

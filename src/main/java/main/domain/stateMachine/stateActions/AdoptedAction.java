@@ -1,16 +1,16 @@
-package main.utils.stateMachine.stateActions;
+package main.domain.stateMachine.stateActions;
 
 import freemarker.template.utility.StringUtil;
 import main.domain.model.Adoption;
 import main.domain.model.Animal;
 import main.domain.model.EmailData;
 import main.domain.model.Person;
+import main.domain.model.enums.TemplatesEnum;
 import main.domain.repository.AdoptionRepository;
+import main.domain.stateMachine.StatesActions;
+import main.domain.stateMachine.stateMachineEnums.States;
 import main.service.AnimalService;
 import main.utils.EmailUtils;
-import main.utils.TemplatesEnum;
-import main.utils.stateMachine.StatesActions;
-import main.utils.stateMachine.stateMachineEnums.States;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -18,19 +18,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+//TODO alterar todas as chamadas do repository do adoption para o service do adoption
 public class AdoptedAction implements StatesActions {
     @Override
     public Adoption action(Adoption adoption, AnimalService animalService, AdoptionRepository repository, EmailUtils emailUtils) {
-        this.updateAnimal(adoption.getAnimalId(), animalService);
+        this.updateAnimal(adoption.getAnimal(), animalService);
         adoption.setDateAdoption(new Date());
         List<Adoption> allAdoptionsRejected = repository.findByAnimalIdAndStatusEquals(
-                adoption.getAnimalId(), States.WAITING);
+                adoption.getAnimal(), States.WAITING);
         List<Person> allAdopters = allAdoptionsRejected.stream()
                 .map(Adoption::getAdopter).collect(Collectors.toList());
         this.rejectAllAdoptions(allAdoptionsRejected, repository);
-        emailUtils.sendSimplesMessageToRejectedAdoptions(allAdopters, adoption.getAnimalId().getName());
+        emailUtils.sendSimpleMessageToRejectedAdoptions(allAdopters, adoption.getAnimal().getName());
         this.sendApprovedEmailData(adoption.getAdopter().getEmail(), adoption.getAdopter().getName(),
-                adoption.getAnimalId().getName(), emailUtils);
+                adoption.getAnimal().getName(), emailUtils);
         return adoption;
     }
 
@@ -50,8 +51,7 @@ public class AdoptedAction implements StatesActions {
 
     private void rejectAllAdoptions(List<Adoption> adoptions, AdoptionRepository repository) {
         adoptions.stream().forEach(a -> {
-            a.setStatus(States.REJECTED);
-            repository.save(a);
+            repository.updateState(a.getId(), States.REJECTED);
         });
     }
 }

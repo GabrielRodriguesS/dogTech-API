@@ -1,4 +1,4 @@
-CREATE TABLE donations_made (
+CREATE TABLE IF NOT EXISTS donations_made (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `origin` VARCHAR(128) NULL,
   `photo_id` BIGINT(18) NOT NULL,

@@ -16,7 +16,7 @@ public class PostAdoption implements Serializable {
     private Long id;
     private String feedback;
     @Basic(optional = false)
-    private int author;
+    private Long author;
     @OneToMany(mappedBy = "postAdoptionId")
     private List<Photo> photoList;
     @JoinColumn(name = "adoption_id", referencedColumnName = "id")

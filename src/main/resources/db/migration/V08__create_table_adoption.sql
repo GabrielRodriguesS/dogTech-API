@@ -1,4 +1,4 @@
-CREATE TABLE adoption (
+CREATE TABLE IF NOT EXISTS adoption (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `date_interest` DATE NOT NULL,
   `date_adoption` DATE NULL,

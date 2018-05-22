@@ -55,6 +55,6 @@ public class Person implements Serializable {
 	private List<ServiceSuggestion> serviceSuggestionList;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "adopter")
     private List<Adoption> adopterList;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionManager")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "manager")
     private List<Adoption> adoptionManagerList;
 }

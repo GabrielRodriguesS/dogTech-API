@@ -1,4 +1,4 @@
-CREATE TABLE services_person (
+CREATE TABLE IF NOT EXISTS services_person (
   `services_id` BIGINT(18) NOT NULL,
   `person_id` BIGINT(18) NOT NULL,
   `date` DATE NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE service_suggestion (
+CREATE TABLE IF NOT EXISTS service_suggestion (
   `id` BIGINT(18) NOT NULL AUTO_INCREMENT,
   `service` VARCHAR(64) NOT NULL,
   `description` VARCHAR(128) NULL,

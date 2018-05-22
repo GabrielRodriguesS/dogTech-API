@@ -1,4 +1,4 @@
-CREATE TABLE role_person (
+CREATE TABLE IF NOT EXISTS role_person (
   `person_id` BIGINT(18) NOT NULL,
   `role_id` BIGINT(18) NOT NULL,
   PRIMARY KEY (`person_id`, `role_id`),

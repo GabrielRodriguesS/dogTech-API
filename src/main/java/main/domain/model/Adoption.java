@@ -1,7 +1,7 @@
 package main.domain.model;
 
 import lombok.Data;
-import main.utils.stateMachine.stateMachineEnums.States;
+import main.domain.stateMachine.stateMachineEnums.States;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,11 +17,11 @@ public class Adoption implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "date_interest")
+    @Column(name = "date_interest", columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     @NotNull
     private Date dateInterest;
-    @Column(name = "date_adoption")
+    @Column(name = "date_adoption", columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Date dateAdoption;
     @Enumerated(EnumType.STRING)
@@ -30,13 +30,13 @@ public class Adoption implements Serializable {
     private List<Photo> photoList;
     @JoinColumn(name = "animal_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Animal animalId;
+    private Animal animal;
     @JoinColumn(name = "adopter", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Person adopter;
     @JoinColumn(name = "adoption_manager", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Person adoptionManager;
+    private Person manager;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<EvaluationAdopter> evaluationAdopterList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
