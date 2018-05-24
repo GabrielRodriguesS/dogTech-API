@@ -7,6 +7,7 @@ import main.domain.stateMachine.stateMachineEnums.States;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import java.util.Optional;
 
 @Data
 public class AdoptionDTO {
@@ -22,14 +23,21 @@ public class AdoptionDTO {
     private String managerName;
 
     public AdoptionDTO(Adoption adoption) {
-        this.animalId = adoption.getAnimal().getId();
-        this.animalName = adoption.getAnimal().getName();
-        this.dateAdoption = adoption.getDateAdoption();
-        this.dateInterest = adoption.getDateInterest();
-        this.status = adoption.getStatus();
-        this.adopterName = adoption.getAdopter().getName();
-        this.managerName = adoption.getManager().getName();
-        this.adopterEmail = adoption.getAdopter().getEmail();
+        this.animalId = Optional.ofNullable(adoption.getAnimal())
+                .map(animal -> animal.getId()).orElse(null);
+        this.animalName = Optional.ofNullable(adoption.getAnimal())
+                .map(animal -> animal.getName()).orElse("animal");
+        this.dateAdoption = Optional.ofNullable(adoption.getDateAdoption())
+                .orElse(null);
+        this.dateInterest = Optional.ofNullable(adoption.getDateInterest())
+                .orElse(null);
+        this.status = Optional.ofNullable(adoption.getStatus()).orElse(null);
+        this.adopterName = Optional.ofNullable(adoption.getAdopter())
+                .map(adopter -> adopter.getName()).orElse("adopter");
+        this.adopterEmail = Optional.ofNullable(adoption.getAdopter())
+                .map(adopter -> adopter.getEmail()).orElse("adopter@email.com");
+        this.managerName = Optional.ofNullable(adoption.getManager())
+                .map(manager -> manager.getName()).orElse("manager");
     }
 
     public AdoptionDTO() {

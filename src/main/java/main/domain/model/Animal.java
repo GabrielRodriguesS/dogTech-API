@@ -63,4 +63,8 @@ public class Animal implements Serializable {
     @JoinColumn(name = "baia_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Baia baiaId;
+
+    public Animal(String name) {
+        this.name = name;
+    }
 }

@@ -23,7 +23,7 @@ public class PostAdoptionJob {
         ZonedDateTime now = ZonedDateTime.now();
         ZonedDateTime fifteenDaysAgo = now.plusDays(-15);
         this.emailUtils.sendSimpleMessageToRequestFeedback(
-                this.adoptionService.findAdoptionsWithStateAdopted()
+                this.adoptionService.findAdoptionsToRequestFeedback()
                         .stream().filter(
                         a -> a.getDateAdoption().toInstant().isBefore(fifteenDaysAgo.toInstant()))
                         .collect(Collectors.toList()));

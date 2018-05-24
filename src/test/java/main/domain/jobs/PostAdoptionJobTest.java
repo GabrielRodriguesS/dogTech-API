@@ -29,10 +29,10 @@ public class PostAdoptionJobTest {
 
     @Test
     public void testCollectAdoptionWithFifteenDaysWithoutFeedback() {
-        System.out.println(this.adoptionService.findAdoptionsWithStateAdopted());
+        System.out.println(this.adoptionService.findAdoptionsToRequestFeedback());
 //        ZonedDateTime now = ZonedDateTime.now();
 //        ZonedDateTime fifteenDaysAgo = now.plusDays(-15);
-//        List<AdoptionDTO> list = this.adoptionService.findAdoptionsWithStateAdopted()
+//        List<AdoptionDTO> list = this.adoptionService.findAdoptionsToRequestFeedback()
 //                .stream().filter(
 //                a -> a.getDateAdoption().toInstant().isBefore(fifteenDaysAgo.toInstant()))
 //                .collect(Collectors.toList());

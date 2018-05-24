@@ -48,4 +48,12 @@ public class Adoption implements Serializable {
     private List<Visit> visitList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<Story> storyList;
+
+    public Adoption(Date dateAdoption, Animal animal) {
+        this.setDateAdoption(dateAdoption);
+        this.setAnimal(animal);
+    }
+
+    public Adoption() {
+    }
 }

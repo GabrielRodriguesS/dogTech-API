@@ -67,11 +67,7 @@ public class AdoptionService {
                 .collect(groupingBy(AdoptionDTO::getAnimalId));
     }
 
-//    public List<Adoption> findAdoptionsWithoutPostAdoption(){
-//        return this.repository.findAdoptionByDateAdoptionIsNotNullAndPostAdoptionListIsNotNull();
-//    }
-
-    public List<AdoptionDTO> findAdoptionsWithStateAdopted() {
+    public List<AdoptionDTO> findAdoptionsToRequestFeedback() {
         ZonedDateTime now = ZonedDateTime.now();
         ZonedDateTime fifteenDaysAgo = now.plusDays(-15);
         return this.repository.findAdoptionsByStatusIsAndPostAdoptionListIsNull(States.ADOPTED).stream()
