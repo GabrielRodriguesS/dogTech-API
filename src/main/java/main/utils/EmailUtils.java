@@ -86,7 +86,7 @@ public class EmailUtils {
         });
     }
 
-    @Bean
+    @Bean("asyncExecutor")
     public Executor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(2);

@@ -7,9 +7,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.ZonedDateTime;
-import java.util.stream.Collectors;
-
 @Component
 @EnableScheduling
 public class PostAdoptionJob {
@@ -20,12 +17,6 @@ public class PostAdoptionJob {
 
     @Scheduled(cron = "0 0 0 * * ?")
     public void sendingOrderFeedbackAdoption() {
-        ZonedDateTime now = ZonedDateTime.now();
-        ZonedDateTime fifteenDaysAgo = now.plusDays(-15);
-        this.emailUtils.sendSimpleMessageToRequestFeedback(
-                this.adoptionService.findAdoptionsToRequestFeedback()
-                        .stream().filter(
-                        a -> a.getDateAdoption().toInstant().isBefore(fifteenDaysAgo.toInstant()))
-                        .collect(Collectors.toList()));
+        this.emailUtils.sendSimpleMessageToRequestFeedback(this.adoptionService.findAdoptionsToRequestFeedback());
     }
 }
