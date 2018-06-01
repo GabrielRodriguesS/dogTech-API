@@ -1,14 +1,16 @@
 package main.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 @Table(name = "baia")
+@JsonIgnoreProperties(value = {"animalList"})
 public class Baia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

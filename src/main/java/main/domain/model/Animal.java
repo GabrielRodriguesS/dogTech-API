@@ -50,8 +50,8 @@ public class Animal implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date approximateAge;
     @JoinTable(name = "animal_breed", joinColumns = {
-        @JoinColumn(name = "animal_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "breed_id", referencedColumnName = "id")})
+            @JoinColumn(name = "animal_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "breed_id", referencedColumnName = "id")})
     @ManyToMany
     private List<Breed> breedList;
     @OneToMany(mappedBy = "animalId")
@@ -66,5 +66,8 @@ public class Animal implements Serializable {
 
     public Animal(String name) {
         this.name = name;
+    }
+
+    public Animal() {
     }
 }
