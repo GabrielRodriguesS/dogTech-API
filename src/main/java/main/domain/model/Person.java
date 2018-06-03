@@ -1,6 +1,7 @@
 package main.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -44,6 +45,7 @@ public class Person implements Serializable {
 	@ManyToMany(mappedBy = "personList")
 	private List<Role> roleList;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "personId")
+	@JsonManagedReference
 	private List<Address> addressList;
 	@OneToMany(mappedBy = "personId")
 	private List<Photo> photoList;

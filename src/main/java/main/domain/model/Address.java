@@ -1,20 +1,18 @@
 package main.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 import main.domain.model.enums.Complement;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity
 @Data
+@Entity
 @Table(name = "address")
-public class Address implements Serializable {
-    //TODO refatorar para se tornar um Embeddable com person
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Address extends GenericClass {
     private String street;
     private String city;
     private String state;
@@ -24,6 +22,8 @@ public class Address implements Serializable {
     private Complement complement;
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @JsonBackReference
+    @JsonProperty("person")
     private Person personId;
 
 

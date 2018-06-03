@@ -1,53 +1,40 @@
 package main.controller.GenericController;
 
-import main.domain.repository.generic.GenericJpaDao;
+import main.domain.model.Generic.GenericClass;
+import main.domain.repository.generic.GenericJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
-public class GenericRestController<T extends Serializable> {
+public class GenericRestController<T extends GenericClass> {
     @Autowired
-    private GenericJpaDao repository;
-    private Class<T> clazz;
-
-    public GenericRestController(Class<T> clazz) {
-        this.clazz = clazz;
-    }
-
-    private void setClazzToRepository() {
-        this.repository.setClazz(this.clazz);
-    }
+    private GenericJpaRepository<T> repository;
 
     @GetMapping
     public List<T> list() {
-        this.setClazzToRepository();
         return this.repository.findAll();
     }
 
     @PostMapping
-    public T create(@RequestBody T entity) {
-        this.setClazzToRepository();
-        return (T) this.repository.save(entity);
+    public Object create(@RequestBody T entity) {
+        return this.repository.save(entity);
     }
 
     @PutMapping
     public T update(@RequestBody T entity) {
-        this.setClazzToRepository();
-        this.repository.update(entity);
-        return entity;
+        return this.repository.save(entity);
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable(value = "id") Long id) {
-        this.setClazzToRepository();
         this.repository.deleteById(id);
     }
 
     @GetMapping("{id}")
-    public T getOne(@PathVariable(value = "id") Long id) {
-        this.setClazzToRepository();
-        return (T) this.repository.findOne(id);
+    @ResponseBody
+    public Optional<T> getOne(@PathVariable(value = "id") Long id) {
+        return this.repository.findById(id);
     }
 }
