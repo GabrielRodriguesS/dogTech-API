@@ -1,24 +1,21 @@
 package main.domain.model;
 
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 import main.domain.model.enums.Sex;
 import main.domain.model.enums.Size;
 import main.domain.model.enums.Species;
 import main.domain.model.enums.Temperament;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "animal")
-public class Animal implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Animal extends GenericClass {
     @Basic(optional = false)
     private String name;
     @Basic(optional = false)

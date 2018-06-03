@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.EvaluationAdopter;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface EvaluationAdopterRepository extends JpaRepository<EvaluationAdopter, Long> {
+public interface EvaluationAdopterRepository extends GenericJpaRepository<EvaluationAdopter> {
 
 }

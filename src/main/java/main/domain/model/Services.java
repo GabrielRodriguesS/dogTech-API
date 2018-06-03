@@ -1,19 +1,16 @@
 package main.domain.model;
 
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "services")
-public class Services implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Services extends GenericClass {
     @Basic(optional = false)
     private String name;
     private Integer value;

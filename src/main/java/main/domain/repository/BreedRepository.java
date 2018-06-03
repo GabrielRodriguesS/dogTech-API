@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Breed;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface BreedRepository extends JpaRepository<Breed, Long> {
+public interface BreedRepository extends GenericJpaRepository<Breed> {
 
 }

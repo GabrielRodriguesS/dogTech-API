@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Services;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface ServicesRepository extends JpaRepository<Services, Long> {
+public interface ServicesRepository extends GenericJpaRepository<Services> {
 
 }

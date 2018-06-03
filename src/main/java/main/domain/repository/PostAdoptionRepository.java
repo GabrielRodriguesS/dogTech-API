@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.PostAdoption;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface PostAdoptionRepository extends JpaRepository<PostAdoption, Long> {
+public interface PostAdoptionRepository extends GenericJpaRepository<PostAdoption> {
 
 }

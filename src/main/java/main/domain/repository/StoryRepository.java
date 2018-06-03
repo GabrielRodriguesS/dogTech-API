@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Story;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface StoryRepository extends JpaRepository<Story, Long> {
+public interface StoryRepository extends GenericJpaRepository<Story> {
 
 }

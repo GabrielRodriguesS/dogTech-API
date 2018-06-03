@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.DonationsMade;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface DonationsMadeRepository extends JpaRepository<DonationsMade, Long> {
+public interface DonationsMadeRepository extends GenericJpaRepository<DonationsMade> {
 
 }

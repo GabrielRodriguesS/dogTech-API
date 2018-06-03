@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Photographer;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface PhotographerRepository extends JpaRepository<Photographer, Long> {
+public interface PhotographerRepository extends GenericJpaRepository<Photographer> {
 
 }

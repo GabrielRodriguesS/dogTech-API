@@ -1,19 +1,16 @@
 package main.domain.model;
 
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Data
 @Table(name = "suggestion_hour")
-public class SuggestionHour implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class SuggestionHour extends GenericClass {
     @Basic(optional = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;

@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Visit;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface VisitRepository extends JpaRepository<Visit, Long> {
+public interface VisitRepository extends GenericJpaRepository<Visit> {
 
 }

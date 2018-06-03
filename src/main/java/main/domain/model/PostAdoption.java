@@ -1,19 +1,16 @@
 package main.domain.model;
 
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "post_adoption")
-public class PostAdoption implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class PostAdoption extends GenericClass {
     private String feedback;
     @Basic(optional = false)
     private Long author;

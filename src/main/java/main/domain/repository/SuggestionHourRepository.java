@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.SuggestionHour;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface SuggestionHourRepository extends JpaRepository<SuggestionHour, Long> {
+public interface SuggestionHourRepository extends GenericJpaRepository<SuggestionHour> {
 
 }

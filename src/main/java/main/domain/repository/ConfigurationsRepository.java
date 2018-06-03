@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Configurations;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface ConfigurationsRepository extends JpaRepository<Configurations, Long> {
+public interface ConfigurationsRepository extends GenericJpaRepository<Configurations> {
 
 }

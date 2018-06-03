@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends GenericJpaRepository<Role> {
 
 }

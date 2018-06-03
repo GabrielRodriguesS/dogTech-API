@@ -1,20 +1,17 @@
 package main.domain.model;
 
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "visit")
-public class Visit implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Visit extends GenericClass {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "visitId")

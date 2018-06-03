@@ -1,23 +1,20 @@
 package main.domain.model;
 
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 import main.domain.stateMachine.stateMachineEnums.States;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "adoption")
-public class Adoption implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Adoption extends GenericClass {
     @NotNull
     @Column(name = "date_interest", columnDefinition = "DATE")
     @Type(type = "java.util.Date")

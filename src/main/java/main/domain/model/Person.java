@@ -3,22 +3,19 @@ package main.domain.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import main.domain.model.Generic.GenericClass;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
 @Table(name = "person")
-public class Person implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Person extends GenericClass {
 	@Basic(optional = false)
 	private String name;
 	@Basic(optional = false)

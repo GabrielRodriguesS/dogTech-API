@@ -1,8 +1,8 @@
 package main.domain.repository;
 
 import main.domain.model.Telephone;
-import org.springframework.data.jpa.repository.JpaRepository;
+import main.domain.repository.generic.GenericJpaRepository;
 
-public interface TelephoneRepository extends JpaRepository<Telephone, Long> {
+public interface TelephoneRepository extends GenericJpaRepository<Telephone> {
 
 }

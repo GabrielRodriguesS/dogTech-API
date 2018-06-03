@@ -1,12 +1,14 @@
 package main.domain.model.Generic;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @MappedSuperclass
-@Data
+@Getter
+@Setter
 public class GenericClass implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
