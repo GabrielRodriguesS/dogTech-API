@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("postAdoption")
+@RequestMapping("posts-adoptions")
 public class PostAdoptionController extends GenericRestController<PostAdoption> {
 }

@@ -18,7 +18,7 @@ public class GenericRestController<T extends GenericClass> {
     }
 
     @PostMapping
-    public Object create(@RequestBody T entity) {
+    public Object save(@RequestBody T entity) {
         return this.repository.save(entity);
     }
 
@@ -27,14 +27,14 @@ public class GenericRestController<T extends GenericClass> {
         return this.repository.save(entity);
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable(value = "id") Long id) {
+    @DeleteMapping
+    public void delete(@RequestParam("id") Long id) {
         this.repository.deleteById(id);
     }
 
-    @GetMapping("{id}")
     @ResponseBody
-    public Optional<T> getOne(@PathVariable(value = "id") Long id) {
+    @GetMapping("{id}")
+    public Optional<T> getOne(@PathVariable("id") Long id) {
         return this.repository.findById(id);
     }
 }

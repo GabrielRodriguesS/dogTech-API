@@ -1,11 +1,11 @@
 package main.service;
 
+import lombok.RequiredArgsConstructor;
 import main.domain.dto.AdoptionDTO;
 import main.domain.model.Adoption;
 import main.domain.repository.AdoptionRepository;
 import main.domain.stateMachine.stateMachineEnums.States;
 import main.utils.EmailUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.stereotype.Service;
@@ -20,21 +20,13 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
 
 @Service
+@RequiredArgsConstructor
 public class AdoptionService {
 
-    private AdoptionRepository repository;
-    private StateMachineService stateMachineService;
-    private AnimalService animalService;
-    private EmailUtils emailUtil;
-
-    @Autowired
-    public AdoptionService(EmailUtils emailUtil, AnimalService animalService,
-                           StateMachineService stateMachineService, AdoptionRepository repository) {
-        this.repository = repository;
-        this.animalService = animalService;
-        this.stateMachineService = stateMachineService;
-        this.emailUtil = emailUtil;
-    }
+    private final AdoptionRepository repository;
+    private final StateMachineService stateMachineService;
+    private final AnimalService animalService;
+    private final EmailUtils emailUtil;
 
     public Adoption save(Adoption adoption) {
         adoption.setDateInterest(new Date());
@@ -61,6 +53,7 @@ public class AdoptionService {
         return ResponseEntity.badRequest().build();
     }
 
+    //TODO paginar isso aqui
     public Map<Long, List<AdoptionDTO>> findAll() {
         return this.repository.findAllAdoptionDTO()
                 .stream()

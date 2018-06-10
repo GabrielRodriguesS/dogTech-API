@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("donation")
+@RequestMapping("donations")
 public class DonationsController extends GenericRestController<Donations> {
 }

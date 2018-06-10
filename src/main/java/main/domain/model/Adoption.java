@@ -1,5 +1,6 @@
 package main.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import main.domain.model.Generic.GenericClass;
 import main.domain.stateMachine.stateMachineEnums.States;
@@ -16,33 +17,43 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Adoption extends GenericClass {
     @NotNull
+    @Temporal(TemporalType.DATE)
+    @Type(type = "java.util.Date")
     @Column(name = "date_interest", columnDefinition = "DATE")
-    @Type(type = "java.util.Date")
-    @Temporal(TemporalType.DATE)
     private Date dateInterest;
-    @Column(name = "date_adoption", columnDefinition = "DATE")
     @Type(type = "java.util.Date")
     @Temporal(TemporalType.DATE)
+    @Column(name = "date_adoption", columnDefinition = "DATE")
     private Date dateAdoption;
     @Enumerated(EnumType.STRING)
     private States status;
+
     @OneToMany(mappedBy = "adoptionId", fetch = FetchType.LAZY)
     private List<Photo> photoList;
+
     @JoinColumn(name = "animal_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Animal animal;
+
+    @JsonManagedReference
     @JoinColumn(name = "adopter", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Person adopter;
+
+    @JsonManagedReference
     @JoinColumn(name = "adoption_manager", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Person manager;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<EvaluationAdopter> evaluationAdopterList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<PostAdoption> postAdoptionList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<Visit> visitList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "adoptionId")
     private List<Story> storyList;
 

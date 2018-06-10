@@ -1,31 +1,36 @@
 package main.service;
 
 import freemarker.template.utility.StringUtil;
+import lombok.RequiredArgsConstructor;
 import main.domain.model.EmailData;
 import main.domain.model.Person;
 import main.domain.model.enums.TemplatesEnum;
 import main.domain.repository.PersonRepository;
 import main.utils.EmailUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class PersonService {
 
-    @Autowired
-    private PersonRepository repository;
-    @Autowired
-    private EmailUtils emailUtils;
+    private final PersonRepository repository;
+    private final EmailUtils emailUtils;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Person save(Person person) {
-        if (person.getPassword().isEmpty()) {
-            String date = person.getDateOfBirth().toString();
-            person.setPassword(date);
-        }
+        person.setPassword(this.bCryptPasswordEncoder.encode(person.getPassword()));
+        return this.repository.save(person);
+    }
+
+    public Person registerAdopterPresential(Person person) {
+        String date = person.getDateOfBirth().toString();
+        person.setPassword(date);
+        person.setDefaultPassword(true);
         return this.repository.save(person);
     }
 
@@ -63,5 +68,9 @@ public class PersonService {
         model.put("link", link);
         emailData.setModel(model);
         this.emailUtils.sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_UPDATE_PASSWORD);
+    }
+
+    public List<Person> findAll() {
+        return this.repository.findAll();
     }
 }

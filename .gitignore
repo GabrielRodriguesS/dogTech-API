@@ -22,4 +22,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Environments ###
 src/main/resources/env/

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("photo")
+@RequestMapping("photos")
 public class PhotoController extends GenericRestController<Photo> {
 }

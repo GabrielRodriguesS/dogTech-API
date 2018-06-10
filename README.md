@@ -1,3 +1,4 @@
+
 # Adoption Management System 
 
 Literalmente um sistema de gerenciamento de adoções, seguindo o modelo organizacional existente na ONG SJPA. Obviamente não é o melhor modelo a ser adotado, mas é UM modelo mapeado e aqui informatizado (na sua grande maioria).
@@ -19,14 +20,47 @@ Literalmente um sistema de gerenciamento de adoções, seguindo o modelo organiz
 
 ## Stack
  - Spring Boot
+ - Spring Machine State
+ - Spring Security
  - Flyway
- - Angular 4
+ - JUnit
+ - MySQL
+ - Freemarker
+ - JWT
 
 ## Features
 
 - Gerenciamento de adoção
 -  Gerencia de pós adoção
 -  Integração com Instagram
+
+## Run
+
+Para rodar a API do DogTech você precisa de poucos passos:
+
+1. Criar os arquivos no diretório resources>env
+    - Arquivo mail.properties:  
+    ```bash
+    mail.smtp.host=smtp.gmail.com  
+    mail.smtp.port=587  
+    mail.smtp.username=seuemail@gmail.com  
+    mail.smtp.password=senha
+    ```
+    - Arquivo security.properties:  
+    ```bash
+    security.secret=senha  
+    security.expiration_time=86_400_000  
+    security.token_prefix=Bearer 
+    security.header_string=Authorization  
+    security.sign_up_url=/login/sign-up
+    ```
+2. Executar no terminal
+    ```bash 
+    mvn build 
+    ```
+3. Não se esqueça de adicionar permissão de acesso a aplicações menos seguras na sua conta do google veja o tutorial [aqui](https://support.google.com/accounts/answer/6010255?hl=pt-BR).
+
+
 
 ## TODO
 

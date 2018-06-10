@@ -1,10 +1,10 @@
 package main.service;
 
+import lombok.RequiredArgsConstructor;
 import main.domain.model.Animal;
 import main.domain.model.enums.Species;
 import main.domain.repository.AnimalRepository;
 import main.utils.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AnimalService {
 
-    @Autowired
-    private AnimalRepository repository;
+    private final AnimalRepository repository;
     private Integer dogsPerPage, felinesPerPage;
 
     public Animal save(Animal animal) {
@@ -43,9 +43,12 @@ public class AnimalService {
         return this.repository.findAll(page);
     }
 
+    public Animal findOne(Long id) {
+        return this.repository.getOne(id);
+    }
+
     private Pageable getPage(int pages, int elementsPerPage) {
-        Pageable page = PageRequest.of(pages, elementsPerPage);
-        return page;
+        return PageRequest.of(pages, elementsPerPage);
     }
 
     private void getAnimalsPerPage(int pageSize) {

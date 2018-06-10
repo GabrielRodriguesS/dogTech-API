@@ -1,5 +1,6 @@
 package main.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import main.domain.model.Generic.GenericClass;
 
@@ -27,8 +28,9 @@ public class Photo extends GenericClass {
     @JoinColumn(name = "animal_id", referencedColumnName = "id")
     @ManyToOne
     private Animal animalId;
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
     @ManyToOne
+    @JsonManagedReference
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person personId;
     @JoinColumn(name = "photographer_id", referencedColumnName = "id")
     @ManyToOne

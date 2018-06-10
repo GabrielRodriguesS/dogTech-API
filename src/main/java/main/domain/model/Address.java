@@ -1,6 +1,5 @@
 package main.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import main.domain.model.Generic.GenericClass;
@@ -22,7 +21,6 @@ public class Address extends GenericClass {
     private Complement complement;
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    @JsonBackReference
     @JsonProperty("person")
     private Person personId;
 

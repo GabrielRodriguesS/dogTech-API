@@ -1,8 +1,10 @@
 package main.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import main.domain.model.Generic.GenericClass;
 import main.domain.model.enums.Roles;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,12 +13,18 @@ import java.util.List;
 @Data
 @Table(name = "role")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Role extends GenericClass {
+public class Role extends GenericClass implements GrantedAuthority {
     @Enumerated(EnumType.STRING)
     private Roles name;
     @JoinTable(name = "role_person", joinColumns = {
         @JoinColumn(name = "role_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "person_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<Person> personList;
+
+    @Override
+    public String getAuthority() {
+        return this.name.name();
+    }
 }

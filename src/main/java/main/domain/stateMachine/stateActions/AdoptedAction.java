@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-//TODO alterar todas as chamadas do repository do adoption para o service do adoption
 public class AdoptedAction implements StatesActions {
     @Override
     public Adoption action(Adoption adoption, AnimalService animalService, AdoptionRepository repository, EmailUtils emailUtils) {

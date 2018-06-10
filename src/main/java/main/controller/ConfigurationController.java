@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("configuration")
+@RequestMapping("configurations")
 public class ConfigurationController extends GenericRestController<Configurations> {
 }

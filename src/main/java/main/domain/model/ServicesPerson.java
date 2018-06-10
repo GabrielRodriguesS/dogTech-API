@@ -1,5 +1,6 @@
 package main.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class ServicesPerson implements Serializable {
     private Date date;
     @OneToMany(mappedBy = "servicesPerson")
     private List<Photo> photoList;
+    @JsonBackReference
     @JoinColumn(name = "person_id1", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Person personId1;
