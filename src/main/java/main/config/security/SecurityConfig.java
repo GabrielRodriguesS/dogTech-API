@@ -29,6 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, this.env.getProperty("security.sign_up_url")).permitAll()
+                .antMatchers(HttpMethod.POST, "persons").permitAll()
+                .antMatchers(HttpMethod.GET, "animals").permitAll()
+                .antMatchers(HttpMethod.GET, "configurations").permitAll()
                 .antMatchers(HttpMethod.GET, "persons/request-password-reset").permitAll()
                 .antMatchers(HttpMethod.GET, "persons/reset-password/{token}").permitAll()
                 .anyRequest().authenticated()
