@@ -15,9 +15,9 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
-    @GetMapping(params = {"page", "size"})
-    public Page<Animal> publicList(@RequestParam("page") int page, @RequestParam("size") int size) {
-        return this.animalService.findAllAnimalsOnPublicView(this.getPage(page, size));
+    @GetMapping
+    public Page<Animal> publicList() {
+        return this.animalService.findAllAnimalsOnPublicView(this.getPage(0, 5));
     }
 
     @GetMapping(value = "admin-list", params = {"page", "size"})

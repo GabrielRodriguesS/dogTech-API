@@ -3,6 +3,7 @@ package main.config.security;
 import lombok.RequiredArgsConstructor;
 import main.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 @PropertySource("classpath:env/security.properties")
@@ -28,12 +30,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, this.env.getProperty("security.sign_up_url")).permitAll()
-                .antMatchers(HttpMethod.POST, "persons").permitAll()
-                .antMatchers(HttpMethod.GET, "animals").permitAll()
-                .antMatchers(HttpMethod.GET, "configurations").permitAll()
-                .antMatchers(HttpMethod.GET, "persons/request-password-reset").permitAll()
-                .antMatchers(HttpMethod.GET, "persons/reset-password/{token}").permitAll()
+                .antMatchers(HttpMethod.POST,
+                        this.env.getProperty("security.sign_up_url"), "persons")
+                .permitAll()
+                .antMatchers(HttpMethod.GET,
+                        "animals", "configurations",
+                        "persons/request-password-reset", "persons/reset-password/{token}")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(), this.env))
