@@ -14,25 +14,30 @@ public class PersonController {
     private PersonService personService;
 
     @PostMapping
-    public Person save(Person entity) {
+    @ResponseBody
+    public Person save(@RequestBody Person entity) {
         return this.personService.save(entity);
     }
 
     @PutMapping
-    public Person update(Person entity) {
+    @ResponseBody
+    public Person update(@RequestBody Person entity) {
         return this.personService.save(entity);
     }
 
+    @ResponseBody
     @PostMapping("register-adopter-presential")
-    public Person registerAdopterPresential(Person entity) {
+    public Person registerAdopterPresential(@RequestBody Person entity) {
         return this.personService.registerAdopterPresential(entity);
     }
 
+    @ResponseBody
     @GetMapping("request-password-reset")
     public ResponseEntity<?> updatePasswordRequest(String email) {
         return this.personService.requestUpdatePassword(email);
     }
 
+    @ResponseBody
     @GetMapping("reset-password/{token}")
     public ResponseEntity<?> findPersonByToken(@PathVariable("token") String token) {
         return this.personService.findByToken(token);

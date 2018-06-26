@@ -1,6 +1,7 @@
 package main.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import main.domain.model.Generic.GenericClass;
 
@@ -14,7 +15,6 @@ public class ServiceSuggestion extends GenericClass {
     @Basic(optional = false)
     private String service;
     private String description;
-    @JsonBackReference
     @ManyToOne(optional = false)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person personId;

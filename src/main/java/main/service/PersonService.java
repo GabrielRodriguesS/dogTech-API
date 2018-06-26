@@ -4,8 +4,11 @@ import freemarker.template.utility.StringUtil;
 import lombok.RequiredArgsConstructor;
 import main.domain.model.EmailData;
 import main.domain.model.Person;
+import main.domain.model.Role;
+import main.domain.model.enums.Roles;
 import main.domain.model.enums.TemplatesEnum;
 import main.domain.repository.PersonRepository;
+import main.domain.repository.RoleRepository;
 import main.utils.EmailUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,17 +22,20 @@ import java.util.*;
 public class PersonService {
 
     private final PersonRepository repository;
+    private final RoleRepository roleRepository;
     private final EmailUtils emailUtils;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Person save(Person person) {
         person.setPassword(this.bCryptPasswordEncoder.encode(person.getPassword()));
+        person.setRoleList(this.getPublicRoles());
         return this.repository.save(person);
     }
 
     public Person registerAdopterPresential(Person person) {
         String date = person.getDateOfBirth().toString();
-        person.setPassword(date);
+        person.setPassword(this.bCryptPasswordEncoder.encode(date));
+        person.setRoleList(this.getPublicRoles());
         person.setDefaultPassword(true);
         return this.repository.save(person);
     }
@@ -70,7 +76,11 @@ public class PersonService {
         this.emailUtils.sendSimpleMessage(emailData, TemplatesEnum.TEMPLATE_UPDATE_PASSWORD);
     }
 
-    public List<Person> findAll() {
-        return this.repository.findAll();
+    // TODO deixar as roles na memoria e busca-las do cache ou da memoria sei la
+    private List<Role> getPublicRoles() {
+        ArrayList<Role> publicRoles = new ArrayList<>();
+        publicRoles.add(this.roleRepository.findRoleByName(Roles.PUBLIC));
+        publicRoles.add(this.roleRepository.findRoleByName(Roles.ADOPTER));
+        return publicRoles;
     }
 }

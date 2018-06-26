@@ -29,7 +29,6 @@ public class Photo extends GenericClass {
     @ManyToOne
     private Animal animalId;
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person personId;
     @JoinColumn(name = "photographer_id", referencedColumnName = "id")

@@ -35,12 +35,10 @@ public class Adoption extends GenericClass {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Animal animal;
 
-    @JsonManagedReference
     @JoinColumn(name = "adopter", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Person adopter;
 
-    @JsonManagedReference
     @JoinColumn(name = "adoption_manager", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Person manager;

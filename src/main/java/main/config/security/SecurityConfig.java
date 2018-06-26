@@ -11,8 +11,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -29,19 +29,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST,
-                        this.env.getProperty("security.sign_up_url"), "persons")
-                .permitAll()
+                        "/login/sign-up", "/persons").permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "animals", "configurations",
-                        "persons/request-password-reset", "persons/reset-password/{token}")
-                .permitAll()
+                        "/animals", "/configurations", "/callback", "/login",
+                        "/persons/request-password-reset", "/persons/reset-password/{token}").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(), this.env))
-                .addFilter(new JWTAuthorizationFilter(authenticationManager(), this.env))
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .addFilterBefore(new JWTAuthenticationFilter("/login", this.authenticationManager(), this.env),
+                        UsernamePasswordAuthenticationFilter.class)
+                // And filter other requests to check the presence of JWT in header
+                .addFilterBefore(new JWTAuthorizationFilter(this.env),
+                        UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -55,4 +55,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
+
 }

@@ -1,4 +1,4 @@
-package main.controller.GenericController;
+package main.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
