@@ -1,5 +1,6 @@
 package main.controller;
 
+import main.domain.dto.AnimalDTO;
 import main.domain.model.Animal;
 import main.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("animals")
@@ -16,8 +19,13 @@ public class AnimalController {
     private AnimalService animalService;
 
     @GetMapping
-    public Page<Animal> publicList() {
-        return this.animalService.findAllAnimalsOnPublicView(this.getPage(0, 5));
+    public List<AnimalDTO> publicListWithoutParams() {
+        return this.animalService.findAllAnimalsOnPublicView();
+    }
+
+    @GetMapping(params = {"page", "size"})
+    public List<AnimalDTO> publicList(@RequestParam(value = "page", defaultValue = "5") int page, @RequestParam(value = "size", defaultValue = "5") int size) {
+        return this.animalService.findAllAnimalsOnPublicView();
     }
 
     @GetMapping(value = "admin-list", params = {"page", "size"})

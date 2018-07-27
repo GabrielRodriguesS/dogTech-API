@@ -1,0 +1,29 @@
+<div class="text-center py-5">
+  <div class="container">
+    <div class="row my-5 justify-content-center">
+      <div class="col-md-9">
+        <h1>Album example</h1>
+        <p class="lead text-muted">blablabla.</p>
+        <a href="#" class="btn btn-primary m-2">Main call to action</a>
+        <a href="#" class="btn btn-secondary m-2">Secondary action</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dataView [value]="animals" [loading]="loadAnimals" [paginator]="true" [rows]="6">
+  <p-header>Lista de animais disponiveis para adoção responsável</p-header>
+  <ng-template let-animal pTemplate="listItem" class="ui-g">
+    <p-card class="ui-g-12 ui-md-6 ui-lg-4" (click)="viewAnimal(animal)">
+      <p-header>
+        {{animal.name}}
+      </p-header>
+      <small><strong>Um pouco de história: </strong></small>
+      {{animal.history}}
+      <p-footer>
+        Footer content here
+      </p-footer>
+    </p-card>
+  </ng-template>
+</p-dataView>
+

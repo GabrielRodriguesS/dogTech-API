@@ -1,6 +1,8 @@
 package main.config.security;
 
 import lombok.RequiredArgsConstructor;
+import main.config.security.filters.JWTAuthenticationFilter;
+import main.config.security.filters.JWTAuthorizationFilter;
 import main.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,13 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,
                         "/login/sign-up", "/persons").permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "/animals", "/configurations", "/callback", "/login",
+                        "/animals", "/animals?page=*&size=*", "/configurations", "/callback", "/login",
                         "/persons/request-password-reset", "/persons/reset-password/{token}").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JWTAuthenticationFilter("/login", this.authenticationManager(), this.env),
                         UsernamePasswordAuthenticationFilter.class)
-                // And filter other requests to check the presence of JWT in header
                 .addFilterBefore(new JWTAuthorizationFilter(this.env),
                         UsernamePasswordAuthenticationFilter.class);
     }

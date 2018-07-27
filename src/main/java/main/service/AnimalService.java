@@ -1,12 +1,12 @@
 package main.service;
 
 import lombok.RequiredArgsConstructor;
+import main.domain.dto.AnimalDTO;
 import main.domain.model.Animal;
 import main.domain.model.enums.Species;
 import main.domain.repository.AnimalRepository;
 import main.utils.NumberUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -27,16 +27,17 @@ public class AnimalService {
         return this.repository.save(animal);
     }
 
-    public Page<Animal> findAllAnimalsOnPublicView(Pageable page) {
-        this.getAnimalsPerPage(page.getPageSize());
-        List<Animal> listCanine = this.repository.
+    public List<AnimalDTO> findAllAnimalsOnPublicView() {
+//        this.getAnimalsPerPage(page.getPageSize());
+        List<AnimalDTO> listCanine = this.repository.
                 findAnimalsBySpeciesIsAndAvailableIsTrueAndPatrimonioTombadoIsFalseAndCareIsFalse
-                        (Species.CANINE, this.getPage(page.getPageNumber(), this.dogsPerPage));
-        List<Animal> listFeline = this.repository.
+                        (Species.CANINE);
+        List<AnimalDTO> listFeline = this.repository.
                 findAnimalsBySpeciesIsAndAvailableIsTrueAndPatrimonioTombadoIsFalseAndCareIsFalse
-                        (Species.FELINE, this.getPage(page.getPageNumber(), this.felinesPerPage));
+                        (Species.FELINE);
         listCanine.addAll(listFeline);
-        return new PageImpl<>(listCanine);
+        return listCanine;
+//        return new PageImpl<>(listCanine);
     }
 
     public Page<Animal> findAllAnimalsOnAdministrationView(Pageable page) {

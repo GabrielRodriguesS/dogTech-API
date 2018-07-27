@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.Optional;
 
 import static java.util.Collections.emptyList;
 
@@ -23,7 +24,7 @@ public class TokenAuthentication {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final String HEADER_STRING = "Authorization ";
 
-    static void addAuthentication(HttpServletResponse res, String username) {
+    public static void addAuthentication(HttpServletResponse res, String username) {
         String JWT = Jwts.builder()
                 .setSubject(username)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
@@ -32,12 +33,12 @@ public class TokenAuthentication {
         res.addHeader(HEADER_STRING, TOKEN_PREFIX + JWT);
     }
 
-    static Authentication getAuthentication(HttpServletRequest request) {
-        String token = request.getHeader(HEADER_STRING);
-        if (token != null) {
+    public static Authentication getAuthentication(HttpServletRequest request) {
+        Optional<String> token = Optional.ofNullable(request.getHeader(HEADER_STRING));
+        if (token.isPresent() || token.hashCode() != 0) {
             String user = Jwts.parser()
                     .setSigningKey(SECRET)
-                    .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+                    .parseClaimsJws(token.get().replace(TOKEN_PREFIX, ""))
                     .getBody()
                     .getSubject();
 
