@@ -1,6 +1,6 @@
-import {Baia} from "./baia";
+import {Baia} from './baia';
 
-export interface Animal {
+export class Animal {
   id: number;
   name: string;
   history: string;

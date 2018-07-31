@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Animal} from "../../commons/models/animal";
+import {AnimalResource} from "../resource/animal-resource";
 
 @Component({
   selector: 'app-animal-view',
@@ -11,9 +12,10 @@ export class AnimalViewComponent implements OnInit {
   @Input()
   animal: Animal;
 
-  constructor() { }
+  constructor(private animalResource: AnimalResource) { }
 
   ngOnInit() {
+    this.animal = this.animalResource.animal;
   }
 
 }

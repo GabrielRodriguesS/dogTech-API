@@ -21,7 +21,7 @@ export class AnimalListComponent implements OnInit {
       value => {
         this.animals = value;
         this.loadAnimals = false;
-      });
+      }, error1 => console.log(error1));
     ;
   }
 

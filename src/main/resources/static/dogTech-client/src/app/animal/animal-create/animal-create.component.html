@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="row text-center">
+    <div class="col-md-6 offset-md-3 mb-3">
+      <aw-wizard>
+        <!-- Step 1 -->
+        <aw-wizard-step stepTitle="Dados gerais">
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3">
+              <p-inputSwitch onLabel="Canino" offLabel="Felino" (onChange)="handleSpecie($event)" [(ngModel)]="specie"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3">
+              <p-inputSwitch onLabel="Masculino" offLabel="Femino" (onChange)="handleSex($event)" [(ngModel)]="sex"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3">
+              <p-inputSwitch onLabel="Castrado" offLabel="Não castrado" [(ngModel)]="animal.castred"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3">
+              <p-inputSwitch onLabel="Vermifugado" offLabel="Não vermifugado" [(ngModel)]="animal.dewormed"></p-inputSwitch>
+            </div>
+          </div>
+
+          <p-button awNextStep icon="arrow-right" label="Avançar"></p-button>
+        </aw-wizard-step>
+        <!-- Step 2 -->
+        <aw-wizard-step stepTitle="Dados especificos">
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3 mb-2">
+              <span class="ui-float-label">
+                <input id="name" [(ngModel)]="animal.name" type="text" size="30" pInputText>
+                <label for="name">Nome</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3 mb-2">
+              <span class="ui-float-label">
+                <p-calendar id="age" [(ngModel)]="animal.approximateAge" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+                <label for="age">Data de nascimento aproximada</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3 mb-2">
+              <h5>Porte</h5>
+              <p-selectButton [options]="sizes" [(ngModel)]="animal.size" pTooltip="Pequeno(até 10kg), Médio(entre 10kg e 25kg), Grande(acima de 25kg)"></p-selectButton>
+            </div>
+          </div>
+
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3 mb-2">
+              <p-multiSelect [options]="breeds" [(ngModel)]="animal.breedList"></p-multiSelect>
+            </div>
+          </div>
+
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3 mb-2">
+              <p-multiSelect [options]="temperaments" [(ngModel)]="animal.temperament" defaultLabel="Temperamento">
+              </p-multiSelect>
+            </div>
+          </div>
+
+          <div class="row text-center">
+            <div class="col-md-6 offset-md-3 mb-3 mb-2">
+              <span class="ui-float-label">
+                <textarea id="informations" [rows]="8" [cols]="35" [(ngModel)]="animal.otherInformation" pInputTextarea autoResize="autoResize"></textarea>
+                <label for="informations">Outras informações</label>
+              </span>
+            </div>
+          </div>
+
+          <p-button awPreviousStep class="mr-2" icon="arrow-left" label="Voltar"></p-button>
+          <p-button awNextStep icon="arrow-right" label="Avançar"></p-button>
+        </aw-wizard-step>
+        <!-- Step 3 -->
+        <aw-wizard-step stepTitle="Identificação do animal">
+          Content of Step 3
+
+          <p-button awPreviousStep class="mr-2" icon="arrow-left" label="Voltar"></p-button>
+          <p-button awNextStep icon="arrow-right" label="Avançar"></p-button>
+        </aw-wizard-step>
+
+         <!-- Step 4 -->
+         <aw-wizard-step stepTitle="Dados de controle">
+            Content of Step 3
+  
+            <p-button awPreviousStep class="mr-2" icon="arrow-left" label="Voltar"></p-button>
+            <p-button (click)="createStepMenu()" icon="arrow-right" label="Finalizar"></p-button>
+          </aw-wizard-step>
+      </aw-wizard>
+    </div>
+  </div>
+
+</div>

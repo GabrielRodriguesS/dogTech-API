@@ -11,12 +11,13 @@ export class HeaderComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
     this.items = [
-      {label: 'Stats', icon: 'fa fa-fw fa-bar-chart', url: '/rota'},
-      {label: 'Calendar', icon: 'fa fa-fw fa-calendar'},
+      {label: 'Animais', url: '/animais'},
+      {label: 'Cadastrar animal', url: '/novo/animal'},
       {label: 'Documentation', icon: 'fa fa-fw fa-book'},
       {label: 'Support', icon: 'fa fa-fw fa-support'},
       {label: 'Social', icon: 'fa fa-fw fa-twitter'}
