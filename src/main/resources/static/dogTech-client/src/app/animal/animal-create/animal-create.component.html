@@ -1,101 +1,176 @@
 <div class="container">
   <div class="row text-center">
-    <div class="col-md-6 offset-md-3 mb-3">
-      <aw-wizard>
-        <!-- Step 1 -->
-        <aw-wizard-step stepTitle="Dados gerais">
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3">
-              <p-inputSwitch onLabel="Canino" offLabel="Felino" (onChange)="handleSpecie($event)" [(ngModel)]="specie"></p-inputSwitch>
-            </div>
+    <div class="w-75 p-3 offset-md-1 mb-3 mt-2">
+      <nz-steps [nzCurrent]="current">
+        <nz-step nzTitle="Etapa 1" nzDescription="Dados gerais"></nz-step>
+        <nz-step nzTitle="Etapa 2" nzDescription="Dados especificos"></nz-step>
+        <nz-step nzTitle="Etapa 3" nzDescription="Dados administrativos"></nz-step>
+        <nz-step nzTitle="Etapa 4" nzDescription="Imagens e outros"></nz-step>
+      </nz-steps>
+    </div>
+  </div>
+  <div class="row">
+    <div class="steps-content col">
+      <!-- First step -->
+      <div *ngIf="current === 0" class="col" style="border-color: gray">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="sex">Sexo</label>
+            <br />
+            <nz-radio-group id="sex" [(ngModel)]="animal.sex">
+              <label nz-radio-button nzValue="MALE">Masculino</label>
+              <label nz-radio-button nzValue="FEMALE">Femino</label>
+            </nz-radio-group>
           </div>
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3">
-              <p-inputSwitch onLabel="Masculino" offLabel="Femino" (onChange)="handleSex($event)" [(ngModel)]="sex"></p-inputSwitch>
-            </div>
+          <div class="form-group col-md-6">
+            <label for="specie">Espécie</label>
+            <br />
+            <nz-radio-group id="specie" [(ngModel)]="animal.species">
+              <label nz-radio-button nzValue="CANINE">Canina</label>
+              <label nz-radio-button nzValue="FELINE">Felina</label>
+            </nz-radio-group>
           </div>
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3">
-              <p-inputSwitch onLabel="Castrado" offLabel="Não castrado" [(ngModel)]="animal.castred"></p-inputSwitch>
-            </div>
+          <div class="form-group col-md-6">
+            <label for="castred">Castrado</label>
+            <br />
+            <nz-radio-group id="castred" [(ngModel)]="stringToCastred" (ngModelChange)="handleBoolean($event, 'castred')">
+              <label nz-radio-button nzValue="yes">Sim</label>
+              <label nz-radio-button nzValue="no">Não</label>
+            </nz-radio-group>
           </div>
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3">
-              <p-inputSwitch onLabel="Vermifugado" offLabel="Não vermifugado" [(ngModel)]="animal.dewormed"></p-inputSwitch>
-            </div>
+          <div class="form-group col-md-6">
+            <label for="dewormed">Vermifugado</label>
+            <br />
+            <nz-radio-group id="dewormed" [(ngModel)]="stringToDewormed" (ngModelChange)="handleBoolean($event, 'dewormed')">
+              <label nz-radio-button nzValue="yes">Sim</label>
+              <label nz-radio-button nzValue="no">Não</label>
+            </nz-radio-group>
           </div>
+        </div>
+      </div>
+      <!-- Second step -->
+      <div *ngIf="current === 1" class="col" style="border-color: gray">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="name">Nome</label>
+            <br />
+            <input id="name" nz-input placeholder="Jujuba" [(ngModel)]="animal.name">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="temperament">Temperamento</label>
+            <br />
+            <nz-select id="temperament" style="width: 100%" nzMode="multiple" nzPlaceHolder="Selecione temperamentos" [(ngModel)]="animal.temperament">
+              <nz-option *ngFor="let option of temperaments" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+            </nz-select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="date">Data de nascimento(aproximada)</label>
+            <br />
+            <nz-date-picker id="date" nzFormat="dd/MM/yyyy" [(ngModel)]="animal.approximateAge">
+            </nz-date-picker>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="size">Porte</label>
+            <br />
+            <nz-radio-group id="size" [(ngModel)]="animal.size">
+              <label nz-radio-button nzTitle="até 10kg" nzPlacement="topCenter" nz-tooltip nzValue="SMALL">Pequeno</label>
+              <label nz-radio-button nzTitle="entre 10kg e 25kg" nzPlacement="topCenter" nz-tooltip nzValue="MEDIUM">Médio</label>
+              <label nz-radio-button nzTitle="acima de 25kg" nzPlacement="topCenter" nz-tooltip nzValue="BIG">Grande</label>
+            </nz-radio-group>
+          </div>
+        </div>
+      </div>
+      <!-- Third step -->
+      <div *ngIf="current === 2">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="available">Está disponivel para adoção?</label>
+            <br />
+            <nz-radio-group id="available" [(ngModel)]="stringToAvailable" (ngModelChange)="handleBoolean($event, 'available')">
+              <label nz-radio-button nzValue="yes">Sim</label>
+              <label nz-radio-button nzValue="no">Não</label>
+            </nz-radio-group>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="care">Está em tratamento?</label>
+            <br />
+            <nz-radio-group id="care" [(ngModel)]="stringToCare" (ngModelChange)="handleBoolean($event, 'care')">
+              <label nz-radio-button nzValue="yes">Sim</label>
+              <label nz-radio-button nzValue="no">Não</label>
+            </nz-radio-group>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="patrimonio">É um patrimonio tombado?</label>
+            <br />
+            <nz-radio-group id="patrimonio" [(ngModel)]="stringToPatrimonioTombado" (ngModelChange)="handleBoolean($event, 'patrimonioTombado')">
+              <label nz-radio-button nzValue="yes">Sim</label>
+              <label nz-radio-button nzValue="no">Não</label>
+            </nz-radio-group>
+          </div>
+          <div class="form-group col-md-6">
+            <!-- Sorry society, but i'm need this table  -->
+            <table>
+              <tr>
+                <th class="justify-content-center">
+                  <label for="baia">Baia</label>
+                </th>
+              </tr>
+              <tr>
+                <td>
+                  <nz-select id="baia" style="width: 100%" nzMode="multiple" nzPlaceHolder="Selecione temperamentos" [(ngModel)]="animal.temperament">
+                    <nz-option *ngFor="let option of temperaments" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+                  </nz-select>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button nz-button nzType="primary" (click)="open()">
+                    <i class="anticon anticon-plus"></i>Nova baia
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- Fourth step -->
+      <div *ngIf="current === 3">
+        <div class="form-row">
+          <div class="form-group col-md-6">
 
-          <p-button awNextStep icon="arrow-right" label="Avançar"></p-button>
-        </aw-wizard-step>
-        <!-- Step 2 -->
-        <aw-wizard-step stepTitle="Dados especificos">
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3 mb-2">
-              <span class="ui-float-label">
-                <input id="name" [(ngModel)]="animal.name" type="text" size="30" pInputText>
-                <label for="name">Nome</label>
-              </span>
-            </div>
           </div>
+          <div class="form-group col-md-6">
 
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3 mb-2">
-              <span class="ui-float-label">
-                <p-calendar id="age" [(ngModel)]="animal.approximateAge" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
-                <label for="age">Data de nascimento aproximada</label>
-              </span>
-            </div>
           </div>
+          <div class="form-group col-md-6">
 
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3 mb-2">
-              <h5>Porte</h5>
-              <p-selectButton [options]="sizes" [(ngModel)]="animal.size" pTooltip="Pequeno(até 10kg), Médio(entre 10kg e 25kg), Grande(acima de 25kg)"></p-selectButton>
-            </div>
           </div>
-
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3 mb-2">
-              <p-multiSelect [options]="breeds" [(ngModel)]="animal.breedList"></p-multiSelect>
-            </div>
+          <div class="form-group col-md-6">
+            <label for="obs">Observações</label>
+            <br />
+            <textarea nz-input id="obs" [nzAutosize]="{ minRows: 2, maxRows: 6 }" placeholder="Adicione aqui observações(Este campo não será exibido)"></textarea>
           </div>
-
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3 mb-2">
-              <p-multiSelect [options]="temperaments" [(ngModel)]="animal.temperament" defaultLabel="Temperamento">
-              </p-multiSelect>
-            </div>
-          </div>
-
-          <div class="row text-center">
-            <div class="col-md-6 offset-md-3 mb-3 mb-2">
-              <span class="ui-float-label">
-                <textarea id="informations" [rows]="8" [cols]="35" [(ngModel)]="animal.otherInformation" pInputTextarea autoResize="autoResize"></textarea>
-                <label for="informations">Outras informações</label>
-              </span>
-            </div>
-          </div>
-
-          <p-button awPreviousStep class="mr-2" icon="arrow-left" label="Voltar"></p-button>
-          <p-button awNextStep icon="arrow-right" label="Avançar"></p-button>
-        </aw-wizard-step>
-        <!-- Step 3 -->
-        <aw-wizard-step stepTitle="Identificação do animal">
-          Content of Step 3
-
-          <p-button awPreviousStep class="mr-2" icon="arrow-left" label="Voltar"></p-button>
-          <p-button awNextStep icon="arrow-right" label="Avançar"></p-button>
-        </aw-wizard-step>
-
-         <!-- Step 4 -->
-         <aw-wizard-step stepTitle="Dados de controle">
-            Content of Step 3
-  
-            <p-button awPreviousStep class="mr-2" icon="arrow-left" label="Voltar"></p-button>
-            <p-button (click)="createStepMenu()" icon="arrow-right" label="Finalizar"></p-button>
-          </aw-wizard-step>
-      </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="steps-action col-xs-2">
+      <button nz-button nzType="default" (click)="pre()" *ngIf="current > 0">
+        <span>Anterior</span>
+      </button>
+      <button nz-button nzType="default" (click)="next()" *ngIf="current < 3">
+        <span>Avançar</span>
+      </button>
+      <button nz-button nzType="primary" (click)="done()" *ngIf="current === 3">
+        <span>Finalizar</span>
+      </button>
     </div>
   </div>
 
 </div>
+
+<nz-drawer [nzClosable]="false" [nzVisible]="visible" nzPlacement="right"
+ nzTitle="Nova Baia" (nzOnClose)="close()">
+  <app-baia-crete ></app-baia-crete>
+</nz-drawer>

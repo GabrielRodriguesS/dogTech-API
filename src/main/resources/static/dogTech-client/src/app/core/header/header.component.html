@@ -1,21 +1,39 @@
 <div class="pos-f-t">
   <div class="collapse" id="navbarToggleExternalContent">
     <div class="bg-dark p-4">
-      <h4 class="text-white">Menu</h4>
-      <p-tabMenu [model]="items" class="custom-tabMenu"></p-tabMenu>
+      <!-- Menu from antd -->
+      <ul nz-menu [nzMode]="'horizontal'" [nzTheme]="dark?'dark':'dark'" style="background-color: #555555">
+        <li nz-menu-item>
+          <i class="anticon anticon-mail"></i> Animais</li>
+        <li nz-submenu>
+          <span title>
+            <i class="anticon anticon-setting"></i> Configurações</span>
+          <ul>
+            <li nz-menu-group style="background-color: #555555">
+              <span title>Cadastros</span>
+              <ul>
+                <li nz-menu-item routerLink="animal/novo">Animais</li>
+                <li nz-menu-item>Baias</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <!-- End menu from antd -->
     </div>
   </div>
 </div>
 <nav class="navbar navbar-dark bg-dark pull-right">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
-          aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 </nav>
 <div class="navbar navbar-dark bg-dark">
   <div class="container d-flex justify-content-between">
     <a href="#" class="navbar-brand d-flex align-items-center">
-      <i class="fa d-inline fa-camera mr-2"></i><strong>Album</strong>
+      <i class="fa d-inline fa-camera mr-2"></i>
+      <strong>Album</strong>
     </a>
 
   </div>

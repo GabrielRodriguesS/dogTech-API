@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Animal } from '../../commons/models/animal';
 import { AnimalResource } from '../resource/animal-resource';
-import { MenuItem, SelectItem } from 'primeng/api';
+import { Baia } from '../../commons/models/baia';
 
 @Component({
   selector: 'app-animal-create',
@@ -11,21 +11,21 @@ import { MenuItem, SelectItem } from 'primeng/api';
 export class AnimalCreateComponent implements OnInit {
 
   animal: Animal;
-  specie = true;
-  sex = true;
   breeds: any[];
-  sizes: SelectItem[];
-  temperaments: SelectItem[];
+  baias: Baia[];
+  temperaments: any[];
 
-  stepsToForm: MenuItem[];
-  activeIndex = 0;
+  stringToCastred: string;
+  stringToDewormed: string;
+  stringToPatrimonioTombado: string;
+  stringToCare: string;
+  stringToAvailable: string;
+  visible = false;
+
+  current = 2;
+
 
   constructor(private animalResource: AnimalResource) {
-    this.sizes = [
-      { label: 'Pequeno', value: 'small' },
-      { label: 'Médio', value: 'medium' },
-      { label: 'Grande', value: 'big' }
-    ];
     this.temperaments = [
       { label: 'Dócil', value: 'DOCILE' },
       { label: 'Agressivo', value: 'AGGRESSIVE' },
@@ -39,29 +39,35 @@ export class AnimalCreateComponent implements OnInit {
   ngOnInit() {
     if (this.animalResource.animal == null) {
       this.animal = new Animal();
-      this.animal.castred = false;
-      this.animal.dewormed = true;
     }
   }
 
-  handleSpecie(e) {
-    if (this.specie) {
-      this.animal.species = 'CANINE';
+  handleBoolean(event, attribute: string): void {
+    if (event === 'no') {
+      this.animal[attribute] = false;
     } else {
-      this.animal.species = 'FELINE';
+      this.animal[attribute] = true;
     }
   }
-
-  handleSex(e) {
-    if (this.sex) {
-      this.animal.species = 'MALE';
-    } else {
-      this.animal.species = 'FEMALE';
-    }
+  // todo criar um animalAvailableValidator para fazer valer a regra de negócio
+  pre(): void {
+    this.current -= 1;
   }
 
-  private createStepMenu() {
-    console.log(this.animal.approximateAge);
+  next(): void {
+    this.current += 1;
+  }
+
+  done(): void {
+    console.log('done');
+  }
+
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
   }
 
 }

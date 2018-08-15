@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AnimalResource} from "../resource/animal-resource";
-import {Animal} from "../../commons/models/animal";
-import {Router} from "@angular/router";
+import {AnimalResource} from '../resource/animal-resource';
+import {Animal} from '../../commons/models/animal';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-animal-list',
@@ -22,7 +22,6 @@ export class AnimalListComponent implements OnInit {
         this.animals = value;
         this.loadAnimals = false;
       }, error1 => console.log(error1));
-    ;
   }
 
   viewAnimal(animal: Animal) {

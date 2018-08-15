@@ -1,4 +1,4 @@
-import {Baia} from './baia';
+import { Baia } from './baia';
 
 export class Animal {
   id: number;
@@ -11,7 +11,7 @@ export class Animal {
   dewormed: boolean;
   patrimonioTombado: boolean;
   care: boolean;
-  temperament: string;
+  temperament: string[];
   size: string;
   otherInformation: string;
   approximateAge: string;
@@ -19,4 +19,15 @@ export class Animal {
   photoList: any[];
   listVaccinesAnimalList: any[];
   baia: Baia;
+
+  constructor() {
+    this.castred = false;
+    this.dewormed = true;
+    this.species = 'CANINE';
+    this.available = true;
+    this.sex = 'MALE';
+    this.patrimonioTombado = false;
+    this.care = false;
+    this.size = 'MEDIUM';
+  }
 }

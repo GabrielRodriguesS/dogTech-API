@@ -1,21 +1,18 @@
 import {Component, OnInit} from '@angular/core';
 
-import {MenuItem} from "primeng/api";
-
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
 
-  items: MenuItem[];
+  menuItens: any[];
 
   constructor() {
   }
 
   ngOnInit() {
-    this.items = [
+    this.menuItens = [
       {label: 'Animais', url: '/animais'},
       {label: 'Cadastrar animal', url: '/novo/animal'},
       {label: 'Documentation', icon: 'fa fa-fw fa-book'},

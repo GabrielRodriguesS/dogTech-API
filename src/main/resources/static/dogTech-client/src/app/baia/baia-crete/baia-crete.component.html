@@ -1,0 +1,16 @@
+<div class="form-group">
+  <div class="col-xs-3">
+    <label for="baiaName">Nome</label>
+    <input id="baiaName" nz-input [(ngModel)]="baia.name" placeholder="Nome">
+  </div>
+  <div class="col-xs-3">
+    <label for="baiaNumber">Numero</label>
+    <br />
+    <nz-input-number id="baiaNumber" [(ngModel)]="baia.number" [nzMin]="1" nzPlaceHolder="Numero" [nzStep]="1"></nz-input-number>
+  </div>
+  <div class="col-xs-3 mt-1">
+    <button nz-button nzType="primary" (click)="save()">
+      <i class="anticon anticon-save"></i> Salvar
+    </button>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Animal} from "../../commons/models/animal";
-import {AnimalResource} from "../resource/animal-resource";
+import {Animal} from '../../commons/models/animal';
+import {AnimalResource} from '../resource/animal-resource';
 
 @Component({
   selector: 'app-animal-view',

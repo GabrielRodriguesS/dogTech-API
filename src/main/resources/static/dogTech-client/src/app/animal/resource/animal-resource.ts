@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {AbstractResource} from "../../core/resource/abstrat-resource";
-import {Animal} from "../../commons/models/animal";
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {AbstractResource} from '../../core/resource/abstrat-resource';
+import {Animal} from '../../commons/models/animal';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class AnimalResource extends AbstractResource<Animal> {

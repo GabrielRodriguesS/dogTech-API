@@ -1,26 +1,29 @@
-.ui-steps .ui-steps-item {
-    width: 25%;
+.steps-content {
+    margin-top: 16px;
+    border: 1px dashed #e9e9e9;
+    border-radius: 6px;
+    background-color: #fafafa;
+    height:100%;
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  .steps-action {
+    margin-top: 24px;
+  }
+
+  button {
+    margin-right: 8px;
+  }
+
+  /* Sorry society, but i'm need this table */
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.ui-steps.steps-custom {
-    margin-bottom: 30px;
-}
- 
-.ui-steps.steps-custom .ui-steps-item .ui-menuitem-link {
-    height: 10px;
-    padding: 0 1em;
-}
- 
-.ui-steps.steps-custom .ui-steps-item .ui-steps-number {
-    background-color: #0081c2;
-    color: #FFFFFF;
-    display: inline-block;
-    width: 36px;
-    border-radius: 50%;
-    margin-top: -14px;
-    margin-bottom: 10px;
-}
-
-.ui-steps.steps-custom .ui-steps-item .ui-steps-title {
-    color: #555555;
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }

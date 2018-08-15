@@ -1,6 +1,6 @@
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from "rxjs/internal/Observable";
+import {Observable} from 'rxjs/internal/Observable';
 
 export abstract class AbstractResource<Entity> {
   protected url: string = environment.apiUrl;
