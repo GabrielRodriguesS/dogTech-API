@@ -18,9 +18,9 @@ import static java.util.Collections.emptyList;
 public class TokenAuthentication {
 
     @Value("${security.expiration_time}") // 5 horas
-    private static final long EXPIRATIONTIME = 0;
+    private static long EXPIRATIONTIME;
     @Value("${security.secret}")
-    private static final String SECRET = null;
+    private static String SECRET = null;
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final String HEADER_STRING = "Authorization ";
 
