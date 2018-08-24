@@ -20,7 +20,8 @@ export abstract class AbstractResource<Entity> {
   }
 
   public post(entity: Entity): Observable<Entity> {
-    return this.http.post<Entity>(this.endPoint, entity);
+    console.log(this.url);
+    return this.http.post<Entity>(this.url, entity);
   }
 
   public put(entity: Entity, id: number): Observable<Entity> {
